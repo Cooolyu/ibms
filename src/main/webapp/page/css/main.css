@@ -1,0 +1,16 @@
+td.td_up {background: #eeeff4; padding-left: 10px;color: #30323e;font-size: 12px}
+td.td_donw {background: #eeeff4;padding-left: 10px;font-size: 11px;color:#595e67;}
+button.main_up {background: #000b40 url(../../page/css/image/icon_off_20.png) no-repeat center;border: 0}
+button.main_up:HOVER {background: #000415 url(../../page/css/image/icon_on_20.png) no-repeat center;border: 0}
+button.main_down {background: #000b40 url(../../page/css/image/icon_off_21.png) no-repeat center;border: 0}
+button.main_down:hover {background: #000415 url(../../page/css/image/icon_on_21.png) no-repeat center;border: 0}
+
+
+.btn,.form-control,.panel,.list-group,.well {border-radius:1px;box-shadow:0 0 0;}
+.form-control {border-color:#d7d7d7;}
+.btn-add {color:#000000; border: 0;text-align: left;background: url(../../page/css/image/icon40.png) right no-repeat;min-width: 100px}
+
+.table tr:nth-child(even) td, .table tr:nth-child(odd) th {
+    background-color: #eeeff4;border: 0;
+
+}

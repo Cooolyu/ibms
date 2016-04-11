@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.gmsz.om.web.system.user.dao.UserMapper">
+	<select id="queryUserList" parameterType="com.gmsz.om.web.system.user.bean.UserQueryForm" resultType="com.gmsz.om.web.system.user.bean.OmUserWithRole">
+		select * from omusers u left join userRole r on u.roleId=r.id where u.userName like CONCAT(CONCAT('%',#{userName}),'%') limit #{start}, #{count}
+	</select>
+	
+	<select id="queryUser" parameterType="long" resultType="com.gmsz.om.web.system.user.bean.OmUserWithRole">
+		select * from omusers u left join userRole r on u.roleId=r.id where u.id=#{userId}
+	</select>
+	
+	<!-- 根据角色查询用户列表 -->
+	<select id="queryUsersByRole" parameterType="long" resultType="com.gmsz.om.web.system.user.bean.OmUserWithRole">
+	    select * from omusers u left join userRole r on u.roleId=r.id where u.roleId=#{roleId}
+	</select>
+	
+	<select id="queryUserCount" parameterType="com.gmsz.om.web.system.user.bean.UserQueryForm" resultType="long">
+		select count(id) from omusers u where u.userName like CONCAT(CONCAT('%',#{userName}),'%')
+	</select>
+	
+	<select id="queryAllRoles" resultType="com.gmsz.om.common.beans.UserRole">
+		select * from userRole
+	</select>
+	
+	<select id="queryUserCountByName" parameterType="com.gmsz.om.common.beans.OmUsers" resultType="int">
+		select count(id) from omusers where username=#{username}
+		<if test="id > 0">
+		<![CDATA[and id<>#{id}]]>
+		</if>
+	</select>
+	
+	<update id="updateUser" parameterType="com.gmsz.om.common.beans.OmUsers">
+		update omusers set username=#{username}, roleId=#{roleId},phone=#{phone} where id=#{id}
+	</update>
+	
+	<update id="updatePass" parameterType="com.gmsz.om.common.beans.OmUsers">
+		update omusers set password=#{password} where id=#{id}
+	</update>
+	
+	<update id="updateUserStatus" parameterType="int">
+		update omusers set status=1 where id=#{userId}
+	</update>
+	
+	<insert id="insertUser" parameterType="com.gmsz.om.common.beans.OmUsers" useGeneratedKeys="true" keyProperty="id">
+		insert into omusers (username, password, roleId, status,phone) values (#{username}, #{password}, #{roleId}, #{status},#{phone})
+	</insert>
+	
+	<select id="queryMainUserByPointId" parameterType="long" resultType="java.util.Map">
+		select om.id,mu.pointId 
+		from omusers om LEFT JOIN monitorPointRefUser mu 
+		on om.id = mu.userId where mu.mainUser = 0 and mu.pointId=#{pointId}
+	</select>
+	
+	<delete id="deleteUser" parameterType="int">
+	    delete from omusers where id = #{id}
+	</delete>
+</mapper>

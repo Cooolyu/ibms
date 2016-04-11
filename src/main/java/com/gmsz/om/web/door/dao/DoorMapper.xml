@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.gmsz.om.web.door.dao.DoorMapper">
+	<select id="getDoorHistoryList" parameterType="com.gmsz.om.web.door.bean.DoorQueryForm" resultType="com.gmsz.om.common.beans.CheckinHistory">
+		select * from checkinHistory c where c.assetsId = #{assetsId} and 
+		 <![CDATA[ c.userName <>'']]>
+		<if test="startTime != null and startTime != ''">
+		    <![CDATA[and c.checkTime >= #{startTime}]]>
+		</if>
+		<if test="endTime != null and endTime != ''">
+		    <![CDATA[and c.checkTime <= #{endTime}]]>
+		</if>
+		order by c.checkTime desc limit #{start},#{count}
+	</select>
+	
+	<select id="countHistory" parameterType="com.gmsz.om.web.door.bean.DoorQueryForm" resultType="long">
+		select count(1) from checkinHistory c where  c.assetsId = #{assetsId} and
+		 <![CDATA[ c.userName <>'']]>
+		<if test="startTime != null and startTime != ''">
+		    <![CDATA[and c.checkTime >= #{startTime}]]>
+		</if>
+		<if test="endTime != null and endTime != ''">
+		    <![CDATA[and c.checkTime <= #{endTime}]]>
+		</if>
+	</select>
+	
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.gmsz.om.web.floor.dao.FloorMapper">
+	<select id="findFloorByBuilding" parameterType="long" resultType="com.gmsz.om.common.beans.Floor">
+		select * from floor where buildingId = #{buildingId}
+	</select>
+	
+	<select id="findFloorById" parameterType="long" resultType="com.gmsz.om.common.beans.Floor">
+		select * from floor where id = #{id}
+	</select>
+	
+	<select id="findMinFloor" parameterType="long" resultType="com.gmsz.om.common.beans.Floor">
+		select * from floor where buildingId = #{buildingId} order by orderNum LIMIT 1
+	</select>
+	
+	<select id="findFloor" parameterType="long" resultType="com.gmsz.om.common.beans.Floor">
+		select * from floor where id = #{id}
+	</select>
+	
+	<select id="findFloorByBuildId" parameterType="com.gmsz.om.web.floor.bean.FloorQuery" resultType="com.gmsz.om.common.beans.Floor">
+		select * from floor where buildingId = #{buildId} and status = 1
+			 <if test="selection != null and selection != ''">
+			     <![CDATA[and name = #{selection} ]]>
+			 </if>
+			 limit #{start},#{count}
+	</select>
+	
+	<select id="floorPages" resultType="long" parameterType="com.gmsz.om.web.floor.bean.FloorQuery">
+		select count(1) from floor where status = 1 and buildingId = #{buildId}
+			<if test="selection != null and selection != ''">
+			     <![CDATA[and name = #{selection} ]]>
+		    </if>
+	</select>
+	
+	<delete id="delFloorByFloorId" parameterType="long">
+		update floor set status = 2 where id = #{floorId}
+	</delete>
+	
+	<insert id="addFloor" parameterType="com.gmsz.om.common.beans.Floor" useGeneratedKeys="true" keyProperty="id">
+		insert into floor (name , buildingId , status ) values (#{name}, #{buildingId}, #{status}) 
+	</insert>
+	
+	<insert id="modifyFloor" parameterType="com.gmsz.om.common.beans.Floor" >
+		update floor set buildingId = #{buildingId}
+			 <if test="name != null and name != ''">
+			     <![CDATA[,name = #{name} ]]>
+			 </if>
+			 <if test="imgUrl != null and imgUrl != ''">
+			     <![CDATA[,imgUrl = #{imgUrl} ]]>
+			 </if>
+	    where id=#{id}
+	</insert>
+</mapper>

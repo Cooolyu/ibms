@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.gmsz.om.web.airCondition.dao.AirConditionMapper">
+	<select id="buildList" resultType="com.gmsz.om.common.beans.Building" >
+		select * from building where status = 1;
+	</select>
+	
+	<select id="floorList" resultType="com.gmsz.om.common.beans.Floor" parameterType="long">
+		select * from floor where status = 1 and buildingId = #{buildId};
+	</select>
+	
+	<select id="assetList" resultType="com.gmsz.om.web.airCondition.beans.AirAssets" parameterType="long">
+		select a.id as assetId , a.name as name , l.locationX , l.locationY
+		from assets as a , location as l  
+		where a.status >= 1 and a.floorId = #{floorId} and a.parentId=1 and a.id = l.assetsId;
+	</select>
+	
+	<update id="savePosition" parameterType="com.gmsz.om.web.airCondition.beans.AirAssets" >
+		update location set locationX = #{locationX} , locationY = #{locationY} where assetsId = #{assetId};
+	</update>
+
+</mapper>

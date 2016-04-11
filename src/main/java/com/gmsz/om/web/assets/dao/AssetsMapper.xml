@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.gmsz.om.web.assets.dao.AssetsMapper">
+	<select id="findAssetsListByForm" parameterType="long"
+		resultType="long">
+		select DISTINCT(a.id) from assets a,location l where
+		floorId = #{floorId} and categoryId = #{categoryId} and l.assetsId =
+		a.id
+	</select>
+
+	<select id="findAssetsInfo" parameterType="long"
+		resultType="com.gmsz.om.web.assets.bean.AssetsResultForm">
+		select a.id,i.imgUrl,l.locationX,l.locationY,a.name from
+		assets a,assetsModel m,location l,icon i,iconRelation r
+		where a.id =
+		l.assetsId and a.modelId = m.id and m.groupId = r.groupId and r.iconId
+		= i.id and i.code = 'normal' and l.id =#{id}
+	</select>
+
+	<select id="findAssetsInfoList" parameterType="com.gmsz.om.web.assets.bean.AssetsQueryForm"
+		resultType="com.gmsz.om.web.assets.bean.AssetsResultForm">
+		select
+		a.id,l.locationX,l.locationY,i.imgUrl,a.name,s.curStatus as
+		assetsStatus
+		from assets a,assetsModel m,iconRelation r,icon
+		i,monitorStatus s,location l
+		where a.modelId = m.id and m.groupId = r.groupId and i.id = r.iconId and
+		s.dictionaryId = #{dictionaryId} and a.id = s.assetsId and l.assetsId
+		= a.id and i.code = s.curStatus and a.floorId = #{floorId} and
+		a.categoryId = #{categoryId}
+	</select>
+
+	<select id="getModelById" parameterType="long"
+		resultType="com.gmsz.om.common.beans.AssetsModel">
+		select * from assetsModel where id = #{id}
+	</select>
+
+	<select id="findFirstAssets" parameterType="com.gmsz.om.web.assets.bean.AssetsQueryForm"
+		resultType="long">
+		select id from assets where categoryId = #{categoryId}
+		limit 1
+	</select>
+
+	<select id="findAssetsProp" parameterType="com.gmsz.om.web.assets.bean.AssetsQueryForm"
+		resultType="String">
+		select value from assetsProperties where assetsId =
+		#{assetsId} and dictionaryId = #{dictionaryId} limit 1
+	</select>
+
+	<select id="assetList" parameterType="com.gmsz.om.web.assets.bean.AssetQuery"
+		resultType="com.gmsz.om.web.assets.bean.AssetList">
+		select a.id , a.serialNumber, a.status ,a.lifeEndDate, a.name ,m.name
+		as modelName , b.name as brandName from assets as a , assetsModel as m
+		,assetsBrand as b where status >= 1
+		and m.id = a.modelId and b.id = a.brandId
+		<if test="serialNum != null and serialNum != ''">
+			<![CDATA[and a.serialNumber = #{serialNum} ]]>
+		</if>
+		<if test="assetName != null and assetName != ''">
+			<![CDATA[and a.name = #{assetName} ]]>
+		</if>
+		limit #{start},#{count}
+	</select>
+
+	<select id="getAssetPages" resultType="long"
+		parameterType="com.gmsz.om.web.assets.bean.AssetQuery">
+		select count(1) from assets where status >= 1
+		<if test="serialNum != null and serialNum != ''">
+			<![CDATA[and serialNumber = #{serialNum} ]]>
+		</if>
+		<if test="assetName != null and assetName != ''">
+			<![CDATA[and name = #{assetName} ]]>
+		</if>
+	</select>
+
+	<select id="getAssetBrand" resultType="com.gmsz.om.common.beans.AssetsBrand">
+		select * from assetsBrand
+	</select>
+
+	<select id="getAssetCate" resultType="com.gmsz.om.common.beans.AssetsCategory">
+		select * from assetsCategory
+	</select>
+
+	<select id="getAssetModel" resultType="com.gmsz.om.common.beans.AssetsModel">
+		select * from assetsModel
+	</select>
+
+	<insert id="addAsset" parameterType="com.gmsz.om.common.beans.Assets"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into assets (name , serialNumber , categoryId , modelId , brandId , position , memo , status , addDate , lifeEndDate ) 
+		values (#{name} , #{serialNumber} , #{categoryId} , #{model} , #{brandId} , #{position} , #{memo} , #{status} , #{addDate} , #{lifeEndDate} )
+	</insert>
+	
+	<select id="assetDetails" parameterType="long"
+		resultType="com.gmsz.om.web.assets.bean.AssetList">
+		select a.id , a.serialNumber, a.status ,a.lifeEndDate, a.name ,m.name 
+		as modelName , b.name as brandName , c.name as cateName , a.position , a.number
+		 from assets as a , assetsModel as m
+		,assetsBrand as b , assetsCategory as c where status >= 1
+		and m.id = a.modelId and b.id = a.brandId and c.id = a.categoryId and a.id = #{id}
+	</select>
+	
+	<select id="assetProperties" resultType="com.gmsz.om.web.assets.bean.AssetProperties" parameterType="long">
+		select a.value , d.name , a.assetsId from assetsProperties as a , dictionary as d where a.assetsId = #{assetId} and a.dictionaryId = d.id
+	</select>
+	
+	<select id="monitorChild" resultType="com.gmsz.om.web.assets.bean.AssetDictionary" >
+		select * from dictionary where parentId = 1
+	</select>
+	
+	<select id="propChild" resultType="com.gmsz.om.web.assets.bean.AssetDictionary" >
+		select * from dictionary where parentId = 3
+	</select>
+	
+	<select id="snmpChild" parameterType="long" resultType="com.gmsz.om.common.beans.SnmpPropertis" >
+		select * from snmpProperties where assetsId=#{assetId} and status = 1;
+	</select>
+</mapper>

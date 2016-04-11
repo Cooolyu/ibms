@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.gmsz.om.web.monitorStatus.dao.MonitorStatusMapper">
+	<select id="getStatusNum" resultType="int" parameterType="com.gmsz.om.web.monitorStatus.bean.MonitorStatusQuery">
+	    select count(1) from monitorStatus m,assets s where m.assetsId = s.id and s.categoryId = #{categoryId} and m.curStatus = #{code}
+	</select>
+	
+	<select id="getDoorNormalNum" resultType="int" parameterType="com.gmsz.om.web.monitorStatus.bean.MonitorStatusQuery">
+	    select count(1) from monitorStatus m,assets s where m.assetsId = s.id and s.categoryId = #{categoryId} and m.curStatus in ('open','close')
+	</select>
+	
+	<select id="getDoorErroNum" resultType="int" parameterType="com.gmsz.om.web.monitorStatus.bean.MonitorStatusQuery">
+	    select count(1) from monitorStatus m,assets s where m.assetsId = s.id and s.categoryId = #{categoryId} and m.curStatus not in ('open','close')
+	</select>
+</mapper>

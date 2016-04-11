@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.gmsz.om.web.alarm.dao.AlarmMapper">
+	<select id="getAlarmList" resultType="com.gmsz.om.web.alarm.bean.AlarmResultForm" parameterType="com.gmsz.om.web.alarm.bean.AlarmQuery">
+			 select t.id as id,a.id as assetsId,t.alarmTime,a.name as assetsName,a.position as assetsLocation,t.status,t.content as memo from termAlarm t,assets a where t.assetsId = a.id
+			 <if test="startTime != null and startTime != ''">
+			     <![CDATA[and t.alarmTime >= #{startTime}]]>
+			 </if>
+			 <if test="endTime != null and endTime != ''">
+			     <![CDATA[and t.alarmTime <= #{endTime}]]>
+			 </if>
+			 <if test="status != null and status != 0">
+			     and t.status = #{status}
+			 </if>
+			  order by t.status asc,t.alarmTime desc limit #{start},#{count}
+	</select>
+	
+	<select id="getAlarmCount" resultType="long" parameterType="com.gmsz.om.web.alarm.bean.AlarmQuery">
+			 select count(1) from termAlarm where 1=1
+			 <if test="startTime != null and startTime != ''">
+			     <![CDATA[and alarmTime >= #{startTime}]]>
+			 </if>
+			 <if test="endTime != null and endTime != ''">
+			     <![CDATA[and alarmTime <= #{endTime}]]>
+			 </if>
+			 <if test="status != null and status != 0">
+			     and status = #{status}
+			 </if>
+	</select>
+	
+	<select id="getAlarmNotice" resultType="long" parameterType="com.gmsz.om.web.alarm.bean.AlarmQuery">
+			 select count(1) from termAlarm where status = #{status}
+	</select>
+	
+	<update id="deal" parameterType="com.gmsz.om.common.beans.TermAlarm">
+	    update termAlarm set status = #{status},content = #{content} where id=#{id}
+	</update>
+</mapper>
