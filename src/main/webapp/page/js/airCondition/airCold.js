@@ -1,5 +1,6 @@
 var airColdModule = angular.module('airColdModule', ['anajaxService']);
-airColdModule.controller('airColdController', function($scope, $http, anajax) {
+airColdModule.controller('airColdController', function($scope, $http, anajax) {	
+	
 	
 	//获取楼栋
 	var buildList = function(params) {
@@ -8,7 +9,7 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 			$scope.builds = data;
 			$scope.build = $scope.builds[0];
 			floorList($scope.builds[0]);
-			
+			$scope.floorTemp = $scope.builds[0];
 		});
 	}
 	buildList();
@@ -19,10 +20,8 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 		anajax.doajax(url,{'buildId':build.id}, function(data) {
 			$scope.floors = data;
 			chooseFloor($scope.floors[0]);
-			assetList($scope.floors[0])
 			
 		});
-		
 	}
 
 	//楼栋选择项
@@ -32,18 +31,15 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	}
 	//楼层选择项
 	var chooseFloor = function(floor) {
+		$scope.floorTemp = floor;
 		$scope.floor = floor;
 		assetList(floor)
 		//初始显示选项
 		$("#panel1").hide();
 		$("#panel2").show();
-		//$("#body1").removeClass("panel-body");
-//		$("#head2").show();
-//		$("#body2").show();
-//		$("#body1").height(0);
 		$(function () {
 		    setTimeout(function () {
-		        iconView();
+		        init();
 		    }, 50);
 		})
 		
@@ -56,22 +52,28 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 		var url = commonutil.actionPath + "/airCdt/assetList";
 		anajax.doajax(url,{'floorId':floor.id}, function(data) {
 			$scope.assets = data;
+			//定义图标未分配的数组和已分配的数组
+			$scope.iassets = new Array();
+			$scope.uassets = new Array();
+			for(var i=0 ; i<$scope.assets.length; i++){
+				if($scope.assets[i].locationX == 0 && $scope.assets[i].locationY == 0){
+					//添加图标未分配的数组
+					$scope.uassets.push($scope.assets[i]);
+				}else{
+					//添加图标已分配的数组
+					$scope.iassets.push($scope.assets[i]);
+				}
+			}
 		});
-		
 	}
 	
-/**-----------------------------------控件拖拽-----------------------------------------**/
-	//初始显示选项
-
-	
-	
+/**-----------------------------------控件拖拽-----------------------------------------**/	
 	$scope.airColds = [{name:'送风温度',value:'20℃',name2:'送风湿度', value2:'60%'},
 	                   {name:'回风温度',value:'20℃',name2:'回风湿度', value2:'60%'},
 	                   {name:'回水温度',value:'20℃',name2:'回风CO2', value2:'60PPM'}
 	                   ]
 	 var edit = function() {
 		//编辑显示项
-		//$("#body1").addClass('panel-body');
 		$("#panel1").show();
 		$("#panel2").hide();
 		init();
@@ -81,8 +83,8 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 			var moveBtn = moveDiv.find(".moveBtn");
 			var assetId = moveDiv.find(".val").val();
 			if (moveDiv.find(".leftVal").val() == 0  &&  moveDiv.find(".topVal").val() == 0) {
-				$("#a"+assetId).show();
-				$("#name"+assetId).show();
+//				$("#a"+assetId).show();
+//				$("#name"+assetId).show();
 			}
 			moveBtn.bind("mousedown", function(){
 				$(document).mousemove(function(e){
@@ -101,41 +103,24 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 		//保存图标位置
 		$(".moveDiv").each(function(){
 			var moveDiv = $(this)
-			var icon = moveDiv.find(".moveBtn");
 			var assetId = moveDiv.find(".val").val();
+			var icon = moveDiv.find(".moveBtn");
 			save(icon , assetId);
+			
 		});
 		//编辑显示项
 		$("#panel1").hide();
 		$("#panel2").show();
-
 		//-----end
-		iconView();
+		assetList($scope.floorTemp);
+		$(function () {
+		    setTimeout(function () {
+		        init();
+		    }, 50);
+		})
 	}
 	
 	$scope.view = view;
-	
-	//图标显示
-	var iconView = function() {
-		$(".moveDiv").each(function(){
-			var x=document.getElementById("imgDiv");
-			var moveDiv = $(this);
-			var assetId = moveDiv.find(".val").val();
-//			alert(moveDiv.find(".leftVal").val());
-			var topNum = getTop(x)+parseInt(moveDiv.find(".leftVal").val());
-			var leftNum = getLeft(x)+parseInt(moveDiv.find(".topVal").val());
-			var assetId = moveDiv.find(".val").val();
-			if (moveDiv.find(".leftVal").val() == 0  &&  moveDiv.find(".topVal").val() == 0) {
-				$("#a"+assetId).hide();
-				$("#name"+assetId).hide();
-				return;
-			}
-			moveDiv.offset({ top: topNum, left:leftNum });
-			
-		});
-	}
-
-	
 	
 	//保存坐标
 	var save = function(icon , assetId) {
@@ -151,18 +136,15 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 		//计算相对坐标
 		var reTop = iconTop - imgDivTop;
 		var reLeft = iconLeft - imgDivLeft;
-		
-//		alert($("#x"+assetId).val()+"---"+iconTop+"--"+reTop)
 		//若有改变则重新赋值
-		if(($("#x"+assetId).val() != reTop || $("#y"+assetId).val() != reLeft)
-			&& reTop>0 && reLeft>0
-			&& $("#x"+assetId).val() != 0 && $("#y"+assetId).val() != 0){
-			$("#x"+assetId).val(reTop);
-			$("#y"+assetId).val(reLeft);
-			var url = commonutil.actionPath + "/airCdt/savePosition";
-			anajax.doajax(url,{'assetId':assetId , 'locationX':reTop , 'locationY':reLeft}, function(data) {
-			
-			});
+		if($("#x"+assetId).val() != reTop || $("#y"+assetId).val() != reLeft){
+			if(reTop>1 && reLeft>1 && $("#x"+assetId).val() != 0 && $("#y"+assetId).val() != 0){
+				$("#x"+assetId).val(reTop);
+				$("#y"+assetId).val(reLeft);
+				var url = commonutil.actionPath + "/airCdt/savePosition";
+				anajax.doajax(url,{'assetId':assetId , 'locationX':reTop , 'locationY':reLeft}, function(data) {
+				});
+			}
 		}
 	}
 	

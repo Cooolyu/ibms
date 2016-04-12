@@ -60,12 +60,12 @@
 
    				
  				    <div id="body1" class="panel-body">
- 				    		<div ng-repeat="asset in assets" class="moveDiv" style="margin-bottom: 10px;">
+ 				    		<div ng-repeat="uasset in uassets" class="moveDiv" style="margin-bottom: 10px;">
 							<a id="a{{asset.assetId}}" class="fa fa-2x fa-map-marker moveBtn" ></a>
-							<label id="name{{asset.assetId}}" >{{asset.name}}</label>
-							<input type="hidden" class="val"  value="{{asset.assetId}}" />
-						    <input id="x{{asset.assetId}}" type="hidden" class="leftVal"  value="{{asset.locationX}}" />
-						    <input id="y{{asset.assetId}}" type="hidden" class="topVal"  value="{{asset.locationY}}" />
+							<label id="name{{asset.assetId}}" >{{uasset.name}}</label>
+							<input type="hidden" class="val"  value="{{uasset.assetId}}" />
+						    <input id="x{{uasset.assetId}}" type="hidden" class="leftVal"  value="{{uasset.locationX}}" />
+						    <input id="y{{uasset.assetId}}" type="hidden" class="topVal"  value="{{uasset.locationY}}" />
 						</div>	
 	
 					</div>
@@ -87,22 +87,18 @@
 						</div>
 						</div>
 					</div>
-			</div>
-				<div>
-				<div ng-repeat="asset in assets" class="moveDiv" style="margin-bottom: 10px;">
-							<a id="a{{asset.assetId}}" class="fa fa-2x fa-map-marker moveBtn" ></a>
-							<label id="name{{asset.assetId}}" >{{asset.name}}</label>
-							<input type="hidden" class="val"  value="{{asset.assetId}}" />
-						    <input id="x{{asset.assetId}}" type="hidden" class="leftVal"  value="{{asset.locationX}}" />
-						    <input id="y{{asset.assetId}}" type="hidden" class="topVal"  value="{{asset.locationY}}" />
-						</div>	
-				
-				
 				</div>
-    
-			</div>
-			</div>		
-			</div>
+				<div ng-repeat="iasset in iassets" class="moveDiv" style="margin-bottom: 10px;">
+					<a id="a{{asset.assetId}}" class="fa fa-2x fa-map-marker moveBtn" ></a>
+					<label id="name{{asset.assetId}}" >{{iasset.name}}</label>
+					<input type="hidden" class="val"  value="{{iasset.assetId}}" />
+				    <input id="x{{iasset.assetId}}" type="hidden" class="leftVal"  value="{{iasset.locationX}}" />
+				    <input id="y{{iasset.assetId}}" type="hidden" class="topVal"  value="{{iasset.locationY}}" />
+				</div>	
+			
+		</div>
+		</div>		
+		</div>
 		</div>
 
 	<jsp:include page="<%=widgetFooter %>"></jsp:include>
