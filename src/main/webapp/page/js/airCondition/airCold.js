@@ -73,6 +73,7 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	                   {name:'回水温度',value:'20℃',name2:'回风CO2', value2:'60PPM'}
 	                   ]
 	 var edit = function() {
+		$scope.bol = false;
 		//编辑显示项
 		$("#panel1").show();
 		$("#panel2").hide();
@@ -100,6 +101,7 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	
 	//查看模式
 	var view = function() {
+		$scope.bol = true;//判断标识符
 		//保存图标位置
 		$(".moveDiv").each(function(){
 			var moveDiv = $(this)
@@ -108,16 +110,25 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 			save(icon , assetId);
 			
 		});
+		
 		//编辑显示项
 		$("#panel1").hide();
 		$("#panel2").show();
-		//-----end
+		
+		//图标重新排布
 		assetList($scope.floorTemp);
 		$(function () {
 		    setTimeout(function () {
 		        init();
 		    }, 50);
 		})
+		
+		//图标弹出事件
+		$scope.showView = function() {
+			if($scope.bol == false)
+				return;
+			$('#showModal').modal('show');
+		}
 	}
 	
 	$scope.view = view;

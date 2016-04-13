@@ -16,26 +16,16 @@
 </jsp:include>
 
 
-<div class="lay-wrap">
-	
-
-	<span class="lay-left-menu:hover lay-sub-menu">报警系统</span>
-
-	<div class="lay-left col-xs-1 ">
+	<div class="lay-wrap">
+		<div class="lay-left col-xs-1 ">
 			<jsp:include page="../frame/leftbar.jsp">
 			<jsp:param value="buildList" name="module"/>
 			<jsp:param value="1" name="buildId" />
 		</jsp:include>
-		
-		<div class="lay-sub-menu">
-			<a class="com-tab com-tab-default com-tab-sm <c:if test="${param.module=='buildList'}">com-active</c:if>" href="<%=actionPath%>/alarm/list/${param.pointId}">报警一览</a>
-			<a class="com-tab com-tab-default com-tab-sm <c:if test="${param.module=='statistics'}">com-active</c:if>" href="<%=actionPath%>/alarmcount/list/${param.pointId}">报警统计</a>
-		</div>
 	</div>
 	
 	
-	
-	<div class="lay-main lay-has-sub-menu">
+	<div class="lay-main">
  		<div class="panel panel-default">
  		
  		

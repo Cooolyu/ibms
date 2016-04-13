@@ -77,5 +77,12 @@ public class AirConditionController {
 		return airConditionService.savePosition(airAssets);
 	}
 	
+	@RequestMapping(value = "test")
+	public ModelAndView test(){
+		ModelAndView mv = new ModelAndView("airCondition/test");
+		return mv;
+	}
+	
+	
 }
 	
