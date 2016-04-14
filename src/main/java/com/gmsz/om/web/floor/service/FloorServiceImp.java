@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
+import com.gmsz.om.common.beans.AssetsCategory;
 import com.gmsz.om.common.beans.Floor;
 import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.common.constant.StateDefine;
@@ -96,6 +97,11 @@ public class FloorServiceImp implements FloorService {
 			this.floorMapper.modifyFloor(floor);
 		}
 		return result;
+	}
+
+	@Override
+	public List<AssetsCategory> selAssetCate() {
+		return this.floorMapper.selAssetCate();
 	}
 
 }

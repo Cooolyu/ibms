@@ -124,11 +124,11 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 		})
 		
 		//图标弹出事件
-		$scope.showView = function() {
+		$scope.showView = function(iasset) {
 			if($scope.bol == false)
 				return;
-			$('#showModal').modal('show');
-		}
+			showView(iasset);
+		};
 	}
 	
 	$scope.view = view;
@@ -209,4 +209,17 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 		obj.find(".leftVal").val(e.pageY);
 		obj.find(".topVal").val(e.pageX);
 	}
+	/**-------------------------------------显示弹出框-------------------------------------**/
+	
+	var showView = function(iasset) {
+//		alert(iasset.assetId)
+		$scope.asvName = iasset.name;
+		$('#showModal').modal('show');
+	}
+	
+	
+	
+	
+	
+	
 });

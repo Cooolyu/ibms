@@ -4,7 +4,7 @@ public class Floor {
 	private Long id;
 	private String name;
 	private String imgUrl;
-	private Long order;
+	private Long sysModuleId;
 	private Long buildingId;
 	private long status;
 	
@@ -26,11 +26,11 @@ public class Floor {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	public Long getOrder() {
-		return order;
+	public Long getSysModuleId() {
+		return sysModuleId;
 	}
-	public void setOrder(Long order) {
-		this.order = order;
+	public void setSysModuleId(Long sysModuleId) {
+		this.sysModuleId = sysModuleId;
 	}
 	public Long getBuildingId() {
 		return buildingId;

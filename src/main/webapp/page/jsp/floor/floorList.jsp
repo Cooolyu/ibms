@@ -6,7 +6,7 @@
 <%@ include file = "/page/jsp/common/commonvariable.jsp" %>
 <jsp:include page="<%=commonLib%>"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>楼栋管理</title>
+<title>楼层管理</title>
 </head>
 <body ng-controller="floorListController">
 
@@ -50,7 +50,7 @@
 				</div>
 				</div>
 					<div class="col-xs-2" style="float:right;">
-						<span style="text-align: center;">新增楼栋</span>
+						<span style="text-align: center;">新增楼层</span>
 						<a href="javascript:void(0)" title="修改" ng-click="goAdd()" class="com-btn-icon glyphicon glyphicon-plus"></a>
 						<a href="<%=actionPath %>/building/show"  class="btn btn-default">返回</a>
 					</div>	

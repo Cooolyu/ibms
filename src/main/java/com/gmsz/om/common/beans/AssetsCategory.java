@@ -3,8 +3,8 @@ package com.gmsz.om.common.beans;
 public class AssetsCategory {
 	private long id;
 	private String name;
-	private int categorystatus;
-	private Integer sysModuleId;
+	private long categorystatus;
+	private long sysModuleId;
 	private Integer eqpttypeid;
 	
 	
@@ -20,16 +20,16 @@ public class AssetsCategory {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getCategorystatus() {
+	public long getCategorystatus() {
 		return categorystatus;
 	}
-	public void setCategorystatus(int categorystatus) {
+	public void setCategorystatus(long categorystatus) {
 		this.categorystatus = categorystatus;
 	}
-	public Integer getSysModuleId() {
+	public long getSysModuleId() {
 		return sysModuleId;
 	}
-	public void setSysModuleId(Integer sysModuleId) {
+	public void setSysModuleId(long sysModuleId) {
 		this.sysModuleId = sysModuleId;
 	}
 	public Integer getEqpttypeid() {

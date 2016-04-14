@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gmsz.om.common.beans.AssetsCategory;
 import com.gmsz.om.common.beans.Floor;
 import com.gmsz.om.common.beans.Pagination;
 import com.gmsz.om.common.beans.Result;
@@ -78,6 +79,7 @@ public class FloorController {
 	@ResponseBody
 	public Result addFloor (@ModelAttribute(value="floor") Floor floor){
 		floor.setStatus(1L);
+		System.out.println(floor.getName()+floor.getBuildingId()+"-------");
 		return this.floorService.addFloor(floor);
 	}
 	
@@ -112,6 +114,12 @@ public class FloorController {
 				return result;
 			}
 		}
-        
 	}
+	
+	@RequestMapping(value = "selAssetCate")
+	@ResponseBody
+	public List<AssetsCategory> selAssetCate(){
+		return this.floorService.selAssetCate();
+	}
+	
 }

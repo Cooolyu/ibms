@@ -2,9 +2,8 @@ package com.gmsz.om.web.floor.dao;
 
 import java.util.List;
 
+import com.gmsz.om.common.beans.AssetsCategory;
 import com.gmsz.om.common.beans.Floor;
-import com.gmsz.om.common.beans.Result;
-import com.gmsz.om.web.building.bean.BuildQuery;
 import com.gmsz.om.web.floor.bean.FloorQuery;
 
 public interface FloorMapper {
@@ -25,4 +24,7 @@ public interface FloorMapper {
 	public void addFloor(Floor floor);
 	
 	public void modifyFloor(Floor floor);
+	
+	//查询资产系统项
+	public List<AssetsCategory> selAssetCate();
 }

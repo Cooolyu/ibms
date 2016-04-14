@@ -107,7 +107,7 @@
 					</div>
 				</div>
 				<div ng-repeat="iasset in iassets" class="moveDiv" style="margin-bottom: 10px;">
-					<a ng-click="showView()" id="a{{iasset.assetId}}" class="fa fa-2x fa-map-marker moveBtn" ></a>
+					<a ng-click="showView(iasset)" id="a{{iasset.assetId}}" class="fa fa-2x fa-map-marker moveBtn" ></a>
 					<label id="name{{asset.assetId}}" >{{iasset.name}}</label>
 					<input type="hidden" class="val"  value="{{iasset.assetId}}" />
 				    <input id="x{{iasset.assetId}}" type="hidden" class="leftVal"  value="{{iasset.locationX}}" />
@@ -126,7 +126,7 @@
     <div class="modal-content">
     		<div class="modal-header">
         		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        		<h4 class="modal-title" id="gridSystemModalLabel" ng-model="viewFloorName">{{viewFloorName}}层图片</h4>
+        		<h4 class="modal-title" id="gridSystemModalLabel" >{{asvName}}</h4>
       	</div>
       	<div class="modal-body">
         		<div class="container-fluid" id="viewDiv">
@@ -142,4 +142,4 @@
 	</div><!-- /.modal -->
 </body>
 </html>
-<script type="text/javascript" src="<%=pagePath %>/js/airCondition/airCold.js"></script>
+<script type="text/javascript" src="<%=pagePath %>/js/airCondition/airCondition.js"></script>

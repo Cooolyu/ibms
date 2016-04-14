@@ -5,6 +5,7 @@ floorListModule.controller('floorListController', function($scope, $http, pagina
 	floorQuery.selection = "";
 	floorQuery.buildId = $("#hidden").val();
 	$scope.floorQuery = floorQuery;
+//	$scope.selectVal = {};
 	
 	/**
 	 * 查询楼层列表
@@ -14,6 +15,16 @@ floorListModule.controller('floorListController', function($scope, $http, pagina
 		anajax.doajax(url, params, function(data) {
 			$scope.floors = data;
 		});
+		
+		//查询资产系统信息
+		var url = commonutil.actionPath + "/floor/selAssetCate";
+		anajax.doajax(url, params, function(data) {
+			$scope.assetCates = data;
+			$scope.assetCate = $scope.assetCates[0]
+		});
+		
+		$scope.fShow = true;
+		$scope.aShow = false;
 	}
 	
 	/**
@@ -69,14 +80,29 @@ floorListModule.controller('floorListController', function($scope, $http, pagina
 		$scope.name = modifyFloor.name;
 	};
 	
+	
 	/**
 	 * 展开添加页
 	 */
 	$scope.modAlarm = {};
 	$scope.goAdd = function(index) {
+		
 		$scope.rightPart = 'add';
 		pageutil.showRightBarAn('楼层管理');
+		$scope.selectVals = [{id:1 , name : "添加楼层"},{id:2 , name : "添加子系统"}];
+		$scope.selectVal = $scope.selectVals[0];
 	};
+	
+	//添加页下拉框change事件
+	$scope.selChange = function(selectVal) {
+		if (selectVal.id == 1) {
+			$scope.fShow = true;
+			$scope.aShow = false;
+		}else {
+			$scope.fShow = false;
+			$scope.aShow = true;
+		}
+	}
 	
 	/**
 	 * 展开查看页
@@ -91,10 +117,26 @@ floorListModule.controller('floorListController', function($scope, $http, pagina
 	 * 添加页
 	 */
 	$scope.doAdd = function($valid) {
-		if (checkBuildName($scope.addFloor.name) == false) return;
-		$scope.addFloor.buildingId = $scope.floorQuery.buildId;
+		
+		var addFloor = {};
+		addFloor.buildingId = $scope.floorQuery.buildId;
+		if ($scope.selectVal.id ==1){
+			if(checkBuildName($scope.addFloor.floorName) == false) return;
+			addFloor.name = $scope.addFloor.floorName;
+			doAddFloor(addFloor);
+			$scope.addFloor.floorName = '';
+		}else{
+			if(checkBuildName($scope.addFloor.assetName) == false) return;
+			addFloor.name = $scope.addFloor.assetName;
+			addFloor.sysModuleId = $scope.assetCate.sysModuleId;
+			doAddFloor(addFloor);
+			$scope.addFloor.assetName = '';
+		}
+	};
+	
+	var doAddFloor = function(addFloor) {
 		var url = commonutil.actionPath + '/floor/addFloor';
-		anajax.doajax(url, $scope.addFloor, function(data) {
+		anajax.doajax(url, addFloor, function(data) {
 			if (data.resultValue == true) {
 				pageutil.showTip('添加成功');
 				pageutil.hideRightBar();
@@ -104,7 +146,7 @@ floorListModule.controller('floorListController', function($scope, $http, pagina
 				alert(data.message);
 			}
 		});
-	};
+	}
 	
 	
 	

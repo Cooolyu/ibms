@@ -38,7 +38,16 @@
 	</delete>
 	
 	<insert id="addFloor" parameterType="com.gmsz.om.common.beans.Floor" useGeneratedKeys="true" keyProperty="id">
-		insert into floor (name , buildingId , status ) values (#{name}, #{buildingId}, #{status}) 
+		insert into floor (name , buildingId , 
+			<if test="sysModuleId != null and sysModuleId != ''">
+			     <![CDATA[sysModuleId ,]]>
+		    </if>
+		status ) values (#{name}, #{buildingId},
+			<if test="sysModuleId != null and sysModuleId != ''">
+			     <![CDATA[#{sysModuleId} ,]]>
+		    </if>
+		
+		 #{status}) 
 	</insert>
 	
 	<insert id="modifyFloor" parameterType="com.gmsz.om.common.beans.Floor" >
@@ -51,4 +60,9 @@
 			 </if>
 	    where id=#{id}
 	</insert>
+	
+	<select id="selAssetCate" resultType="com.gmsz.om.common.beans.AssetsCategory">
+		select * from assetsCategory;
+	</select>
+	
 </mapper>
