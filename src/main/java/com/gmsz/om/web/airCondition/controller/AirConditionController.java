@@ -37,6 +37,8 @@ public class AirConditionController {
 	@RequestMapping(value="show")
 	public ModelAndView showBuild(){
 		ModelAndView mv = new ModelAndView("airCondition/airConditionShow");
+		//添加sysModuleId
+		mv.addObject("sysModuleId", "5");
 		return mv;
 	}
 	
@@ -51,9 +53,12 @@ public class AirConditionController {
 	//查询相关的楼层
 	@RequestMapping(value = "floorList")
 	@ResponseBody
-	public List<Floor> floorList(@RequestParam("buildId") long buildId){
-		LOG.info(airConditionService.floorList(buildId).size()+"----"+buildId);
-		return airConditionService.floorList(buildId);
+	public List<Floor> floorList(@RequestParam("buildId") long buildId,
+								 @RequestParam("sysModuleId") long sysModuleId){
+		Floor floor = new Floor();
+		floor.setBuildingId(buildId);
+		floor.setSysModuleId(sysModuleId);
+		return airConditionService.floorList(floor);
 	}
 	
 	//查询相关楼层的资产

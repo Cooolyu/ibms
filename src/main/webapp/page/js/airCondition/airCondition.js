@@ -1,7 +1,6 @@
 var airColdModule = angular.module('airColdModule', ['anajaxService']);
 airColdModule.controller('airColdController', function($scope, $http, anajax) {	
-	
-	
+		
 	//获取楼栋
 	var buildList = function(params) {
 		var url = commonutil.actionPath + "/airCdt/buildList";
@@ -17,7 +16,7 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	//获取楼层
 	var floorList = function (build) {
 		var url = commonutil.actionPath + "/airCdt/floorList";
-		anajax.doajax(url,{'buildId':build.id}, function(data) {
+		anajax.doajax(url,{'buildId':build.id,'sysModuleId':$("#sysModuleId").val()}, function(data) {
 			$scope.floors = data;
 			chooseFloor($scope.floors[0]);
 			

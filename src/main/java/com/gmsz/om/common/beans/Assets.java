@@ -119,6 +119,7 @@ public class Assets {
 	private int mangerMode;
 	private long assetsGroupid;
 	private double charge;
+	private long floorId;
 	
 	
 	/**
@@ -309,6 +310,12 @@ public class Assets {
 	}
 	public void setAssetsGroupid(long assetsGroupid) {
 		this.assetsGroupid = assetsGroupid;
+	}
+	public long getFloorId() {
+		return floorId;
+	}
+	public void setFloorId(long floorId) {
+		this.floorId = floorId;
 	}
 	
 }

@@ -43,7 +43,7 @@
 					
 				</div>
 				</div>
-					<div class="col-xs-2" style="float:right">
+					<div class="col-xs-2" style="float:right;margin-top: 8px">
 						<span style="text-align: center">新增楼栋</span>
 						<a href="javascript:void(0)" title="修改" ng-click="goAdd()" class="com-btn-icon glyphicon glyphicon-plus"></a>
 					</div>	

@@ -2,12 +2,14 @@ package com.gmsz.om.web.assets.service;
 
 import java.util.List;
 
+import com.gmsz.om.common.beans.AssetLocation;
 import com.gmsz.om.common.beans.Assets;
 import com.gmsz.om.common.beans.AssetsBrand;
 import com.gmsz.om.common.beans.AssetsCategory;
 import com.gmsz.om.common.beans.AssetsModel;
 import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.common.beans.SnmpPropertis;
+import com.gmsz.om.web.assets.bean.AssetCusQuery;
 import com.gmsz.om.web.assets.bean.AssetDictionary;
 import com.gmsz.om.web.assets.bean.AssetList;
 import com.gmsz.om.web.assets.bean.AssetProperties;
@@ -53,4 +55,17 @@ public interface AssetsService {
 	public List<AssetDictionary> monitorChild();
 	
 	public List<SnmpPropertis> snmpChild(long assetId);
+	
+	public void addAssetLocation(AssetLocation location);
+	public int selectByName(Assets assets);
+	public Assets selectAByName(Assets assets);
+	
+	public Result delAsset(long assetId);
+	public List<Assets> getParameter(long assetId);
+	
+	public void addDictionary(Assets assets);
+	public void delLocation(long assetId);
+	public void delDictionary(long assetId);
+	
+	public Result uiAssetCus (AssetCusQuery assetCusQuery);
 }

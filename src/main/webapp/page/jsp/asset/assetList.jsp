@@ -49,7 +49,7 @@
 					</div>
 				</div>
 				</div>
-					<div class="col-xs-2" style="float:right">
+					<div class="col-xs-2" style="float:right;margin-top: 10px; ">
 						<span style="text-align: center">资产设备添加</span>
 						<a href="javascript:void(0)" title="添加" ng-click="goAdd()" class="com-btn-icon glyphicon glyphicon-plus"></a>
 					</div>	
@@ -64,11 +64,11 @@
 							<thead>
 								<tr >
 									<th style="width:10%; text-align:center;">序号</th>
-									<th style="width:12.5%; text-align:center;">编号</th>
 									<th style="width:15%; text-align:center;">名称</th>
 									<th style="width:10%; text-align:center;">品牌</th>
 									<th style="width:15%; text-align:center;">型号</th>
 									<th style="width:10%; text-align:center;">状态</th>
+									<th style="width:12.5%; text-align:center;">位置</th>
 									<th style="width:12.5%; text-align: center;">生命结束日</th>
 									<th style="width:12.5%; text-align:center;">操作</th>
 								</tr>
@@ -77,11 +77,11 @@
 							<tbody >
 							<tr ng-repeat="asset in assets">
 								<td style="width:10%; text-align:center;" ng-bind="$index+1"></td>
-								<td style="width:12.5%; text-align:center;">{{asset.serialNumber}}</td>
 								<td style="width:15%; text-align:center;">{{asset.name}}</td>
 								<td style="width:10%; text-align:center;">{{asset.brandName}}</td>
 								<td style="width:15%; text-align:center;">{{asset.modelName}}</td>
 								<td style="width:10%; text-align:center;">{{asset.status|status}}</td>
+								<td style="width:12.5%; text-align:center;">{{asset.buildingName}}-{{asset.floorName}}</td>
 								<td style="width:12.5%; text-align:center;">{{asset.lifeEndDate|date:'yyyy-MM-dd'}}</td>
 								<td style="width:12.5%; text-align:center;">
 									<a href="javascript:void(0)" title="资产详情" ng-click="goDetails($index)" class="com-btn-icon glyphicon glyphicon-th-large"></a>

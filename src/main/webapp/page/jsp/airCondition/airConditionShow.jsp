@@ -16,6 +16,7 @@
 </head>
 <body ng-controller="airColdController">
 
+	<input id="sysModuleId" style="hidden" value="${sysModuleId}" />
 	<jsp:include page="<%=widgetHeader%>"/>
 	<jsp:include page="<%=widgetAnRightBar%>">
 	<jsp:param name="module1" value=""/>

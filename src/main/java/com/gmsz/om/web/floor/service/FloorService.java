@@ -28,4 +28,6 @@ public interface FloorService {
 	public Result modifyFloor(Floor floor);
 	
 	public List<AssetsCategory> selAssetCate();
+	
+	public List<Floor> floorListDueSys(FloorQuery floorQuery);
 }

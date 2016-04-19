@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!DOCTYPE mapper    
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
+"http://www.ibatis.com/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="com.gmsz.om.web.floor.dao.FloorMapper">
 	<select id="findFloorByBuilding" parameterType="long" resultType="com.gmsz.om.common.beans.Floor">
@@ -11,7 +12,7 @@
 	</select>
 	
 	<select id="findMinFloor" parameterType="long" resultType="com.gmsz.om.common.beans.Floor">
-		select * from floor where buildingId = #{buildingId} order by orderNum LIMIT 1
+		select * from floor where buildingId = #{buildingId} order by id LIMIT 1
 	</select>
 	
 	<select id="findFloor" parameterType="long" resultType="com.gmsz.om.common.beans.Floor">
@@ -63,6 +64,10 @@
 	
 	<select id="selAssetCate" resultType="com.gmsz.om.common.beans.AssetsCategory">
 		select * from assetsCategory;
+	</select>
+	
+	<select id="floorListDueSys" parameterType="com.gmsz.om.web.floor.bean.FloorQuery" resultType="com.gmsz.om.common.beans.Floor">
+		select * from floor where buildingId = #{buildId} and status = 1 and sysModuleId >0;
 	</select>
 	
 </mapper>

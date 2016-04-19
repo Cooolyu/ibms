@@ -8,8 +8,8 @@
 <div ng-class="{'com-hide': rightPart!='add'}">
 <form class="form-horizontal" role="form" id="assetAddForm" name="assetAddForm" method="post">
 	<div class="form-group col-sm-12">
-		<label >*编号:</label>
-		<input name="serialNumber" ng-class="{'has-warn':assetAddForm.serialNumber.$error.required}" type="text" class="form-control"  ng-model="addAsset.serialNumber" required ng-trim="true" placeholder="请输入编号"/>
+		<!-- <label>*编号</label>
+		<input name="serialNumber" ng-class="{'has-warn':assetAddForm.serialNumber.$error.required}" type="text" class="form-control"  ng-model="addAsset.serialNumber" required ng-trim="true" placeholder="请输入编号"/> -->
 		<label >*名称:</label>
 		<input name="name" ng-class="{'has-warn':assetAddForm.name.$error.required}" type="text" class="form-control"  ng-model="addAsset.name" required ng-trim="true" placeholder="请输入名称"/>
 		<label >*类别:</label>
@@ -23,7 +23,11 @@
 		<label >单位:</label>
 		<input type="text" class="form-control"  ng-model="addAsset.unit" maxlength="200" placeholder="200字以内"/>
 		<label >位置:</label>
-		<input type="text" class="form-control"  ng-model="addAsset.position" maxlength="200" placeholder="200字以内"/>
+		<div>
+		<select ng-change="selFloor()" ng-model="build" ng-options="a.name for a in builds"  class="form-control" style=" float:left; width: 50%;"></select>
+		<select ng-model="floor" ng-options="a.name for a in floors" class="form-control" style=" float:right; width: 50%;"></select>
+		</div>
+		
 		<label >*状态:</label>
 		<select ng-model="assetStatus" class="form-control" ng-options="a.name for a in assetStatuss"> </select>
 		<label >生命到期时间:</label>

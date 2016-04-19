@@ -2,6 +2,8 @@ package com.gmsz.om.web.assets.dao;
 
 import java.util.List;
 
+import com.gmsz.om.common.beans.AssetLocation;
+import com.gmsz.om.common.beans.AssetProp;
 import com.gmsz.om.common.beans.Assets;
 import com.gmsz.om.common.beans.AssetsBrand;
 import com.gmsz.om.common.beans.AssetsCategory;
@@ -52,5 +54,21 @@ public interface AssetsMapper {
 	public List<AssetDictionary> propChild();
 	//查询snmp子项
 	public List<SnmpPropertis> snmpChild(long assetId);
-
+	
+	//插入assetLocation
+	void addLocation (AssetLocation location);
+	int selectByName(Assets assets);
+	//根据楼层和名字查询用于新增的资产位置
+	Assets selectAByName(Assets assets);
+	void delAsset(long assetId);
+	//获取资产参数
+	List<Assets> getParameter(long assetId);
+	//添加父字典名
+	void addDictionary(Assets assets);
+	void delLocation(long assetId);
+	void delDictionary(long assetId);
+	
+	//更新插入资产自定义属性
+	void updateAssetProp (AssetProp assetProp);
+	void insertAssetProp (AssetProp assetProp);
 }

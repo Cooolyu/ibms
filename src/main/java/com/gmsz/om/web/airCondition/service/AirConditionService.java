@@ -10,7 +10,7 @@ import com.gmsz.om.web.airCondition.beans.AirAssets;
 public interface AirConditionService {
 	
 	List<Building> buildList();
-	List<Floor> floorList(long buildId);
+	List<Floor> floorList(Floor floor);
 	List<AirAssets> assetList(long floorId);
 
 	Result savePosition(AirAssets airAssets);

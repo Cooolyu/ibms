@@ -98,7 +98,26 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		anajax.doajax(purl,params,function(data) {
 			$scope.assetModels = data;
 		});
+		purl = commonutil.actionPath + '/building/getAllBuilding';
+		anajax.doajax(purl,params,function(data) {
+			$scope.builds = data;
+			$scope.build = $scope.builds[0];
+			selFloor();
+		});
+		
 	}
+	
+	var selFloor = function() {
+		var purl = commonutil.actionPath + '/floor/floorListDueSys';
+		var floorQuery = {};
+		floorQuery.buildId = $scope.build.id;
+		anajax.doajax(purl,floorQuery,function(data) {
+			$scope.floors = data;
+			$scope.floor = $scope.floors[0];
+		});
+	}
+	$scope.selFloor = selFloor;
+	
 	
 	
 	/**
@@ -106,23 +125,23 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	 */
 	$scope.addAsset = {}
 	$scope.doAdd = function($valid) {
-		if ($scope.addAsset.name == null || $scope.addAsset.serialNumber == null || $scope.addAsset.number == null) {
+		//|| $scope.addAsset.serialNumber == null
+		if ($scope.addAsset.name == null  || $scope.addAsset.number == null  || $scope.floor == null) {
 			alert("必填选项不能为空！！")
 			return;
 		}
+		
 		var addAsset = {};
-		addAsset.serialNumber = $scope.addAsset.serialNumber;
+//		addAsset.serialNumber = $scope.addAsset.serialNumber;
 		addAsset.name = $scope.addAsset.name;
 		addAsset.categoryId = $scope.assetCate.id;
 		addAsset.brandId = $scope.assetBrand.id;
 		addAsset.model = $scope.assetModel.id;
 		addAsset.number = $scope.addAsset.number;
 		addAsset.unit = $scope.addAsset.unit;
-		addAsset.position = $scope.addAsset.position;
 		addAsset.status = $scope.assetStatus.id;
 		addAsset.lifeEndDate = $scope.addAsset.lifeEndDate;
-//		alert(addAsset.lifeEndDate)
-//		return;
+		addAsset.floorId = $scope.floor.id;
 		addAsset.memo = $scope.addAsset.memo;
 		var purl = commonutil.actionPath + '/asset/addAsset';
 		anajax.doajax(purl,addAsset,function(data) {
@@ -154,6 +173,8 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	 * 前往资产自定义页
 	 */
 	$scope.goCustomize = function (index , params) {
+		
+		$scope.assetId = $scope.assets[index].id;
 
 		$scope.rightPart = 'customize';
 		pageutil.showRightBarAn('资产自定义')
@@ -178,6 +199,11 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 			$scope.monitorChilds = data;
 			$scope.monitorChilds = addValMonitor($scope.monitorChilds);
 		});	
+		//获取资产参数
+		purl = commonutil.actionPath + '/asset/getParameter';
+		anajax.doajax(purl,{'assetId':$scope.assets[index].id},function(data) {
+			$scope.assetParameters = data;
+		});
 		//获取snmp列表
 		purl = commonutil.actionPath + '/asset/snmpChild';
 		anajax.doajax(purl,{'assetId':$scope.assets[index].id},function(data) {
@@ -188,6 +214,8 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 				$scope.show = false;
 			}
 		});	
+		
+
 	
 		
 	}
@@ -197,13 +225,13 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		if ($scope.propChild.id == 0) {
 			return;	
 		}
-		for(var i=0; i<$scope.assetProps.length; i++){
-			if($scope.assetProps[i].name == $scope.propChild.name){
-				alert("已添加，请重新选择")
-				return;
-			}
-		}
-		var assetProp = {assetsId:'',code:'',dictionaryId:$scope.propChild.id,id:'',name:$scope.propChild.name,orderNum:'',parentId:'',value:""};
+//		for(var i=0; i<$scope.assetProps.length; i++){
+//			if($scope.assetProps[i].name == $scope.propChild.name){
+//				alert("已添加，请重新选择")
+//				return;
+//			}
+//		}
+		var assetProp = {assetsId:$scope.assetId,code:'',dictionaryId:$scope.propChild.id,id:0,name:$scope.propChild.name,orderNum:'',parentId:'',value:""};
 		$scope.assetProps.push(assetProp);
 	}
 	
@@ -230,28 +258,64 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	}
 	
 	//复选框只能选中一个
-    $scope.updateSelection = function(position, monitorChilds) {
-        angular.forEach(monitorChilds, function(monitorChild, index) {
-          if (position != index) 
-        	  monitorChild.checked = false;
-        });
-        $scope.temp = "";
-        $scope.temp = monitorChilds[position].id;
-      }
+//    $scope.updateSelection = function(position, monitorChilds) {
+//        angular.forEach(monitorChilds, function(monitorChild, index) {
+//          if (position != index) 
+//        	  monitorChild.checked = false;
+//        });
+//        $scope.temp = "";
+//        $scope.temp = monitorChilds[position].id;
+//      }
     //snmp添加事件
     $scope.addSnmp = function() {
     	var snmpChild = {id:'',code:'',oid:'',ext:'',assetsId:'',status:'1'}
     	$scope.snmpChilds.push(snmpChild);
 	}
+    
+    
    
     //资产自定义项提交事件
 	$scope.doCustomize = function($vaild) {
-		var cusQuery = {};
-		alert($scope.monitorChilds)
-//		var purl = commonutil.actionPath + '/asset/assetCustomize';
-//		anajax.doajax(purl,cusQuery,function(data) {
-//			alert("success")
-//		});
+		for(var i=0; i<$scope.assetProps.length; i++){
+			if($scope.assetProps[i].value == ''|| $scope.assetProps[i].value == null){
+				alert("请重新填写，必填项不能为空!");
+				return;
+			}
+		}
+		alert($scope.assetProps[0].dictionaryId)
+//		if($scope.assetProps.length > 0){
+//			return;
+		var purl = commonutil.actionPath + '/asset/uiAssetProp';
+		//构建数组
+		var assetProps = [];
+		for(var i=0; i<$scope.assetProps.length; i++){
+			var assetProp = {};
+			assetProp.id = $scope.assetProps[i].id;
+			assetProp.dictionaryId = $scope.assetProps[i].dictionaryId;
+			assetProp.assetId = $scope.assetProps[i].assetsId;
+			assetProp.value = $scope.assetProps[i].value;
+			assetProps.push(assetProp);
+		}
+		
+		var subForm = {};
+		subForm.assetProps = assetProps;
+
+//		alert(JSON.stringify(subForm)+"---");
+		 $.ajax({  
+		        type : 'POST',  
+		        contentType : 'application/json',  
+		        url : purl,  
+		        processData : false,  
+		        dataType : 'json',  
+		        data : JSON.stringify(subForm),  
+		        success : function(data) {  
+		         
+		        },  
+		        error : function() {  
+		            alert('Err...');  
+		        }  
+		    }); 
+
 	}
 	
 /**---------------------------------------------------------资产修改页---------------------------------------------------**/
@@ -320,12 +384,12 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	 */
 	$scope.doDel = function(index){
 		if (confirm('您确定要删除吗?删除后将不可恢复!')) {
-			var url = commonutil.actionPath + '/building/delBuild';
-			anajax.doajax(url, {'buildId':$scope.builds[index].id}, function(data) {
+			var url = commonutil.actionPath + '/asset/delAsset';
+			anajax.doajax(url, {'assetId':$scope.assets[index].id}, function(data) {
 				if (data.resultValue == true) {
-					pageutil.showTip('删除楼宇成功');
-					query(buildQuery);
-				    page(buildQuery);
+					pageutil.showTip('删除资产成功');
+					query(assetQuery);
+				    page(assetQuery);
 				} else {
 					alert(data.message);
 				}

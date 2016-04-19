@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gmsz.om.common.beans.AssetsCategory;
 import com.gmsz.om.common.beans.Floor;
@@ -102,6 +103,11 @@ public class FloorServiceImp implements FloorService {
 	@Override
 	public List<AssetsCategory> selAssetCate() {
 		return this.floorMapper.selAssetCate();
+	}
+
+	@Override
+	public List<Floor> floorListDueSys(FloorQuery floorQuery) {
+		return this.floorMapper.floorListDueSys(floorQuery);
 	}
 
 }

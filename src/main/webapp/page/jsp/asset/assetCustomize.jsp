@@ -18,7 +18,7 @@
 		
 			<div ng-repeat="assetProp in assetProps">
 				<label >{{assetProp.name | isNone}}:</label>
-				<input type="text" class="form-control" maxlength="200" ng-model="assetProp.value" placeholder="200字以内"/>
+				<input name="value" type="text" ng-model="assetProp.value" ng-class="{'has-warn':cusForm.value.$error.required}" required ng-trim="true" class="form-control" maxlength="200"  placeholder="200字以内"/>
 			</div>
 		
 			<div class="form-group col-md-12 form-inline" style="margin-top: 5px">
@@ -38,13 +38,13 @@
 		<div class="form-group col-sm-12" ng-repeat="monitorChild in monitorChilds">
 			<div class="form-group col-md-12 form-inline">
 				<label class="control-label">{{monitorChild.name}}：</label>
-				<input type="checkbox" ng-model="monitorChild.checked" ng-click="updateSelection($index, monitorChilds)" style="margin-left: 80px">
+				<input type="checkbox" ng-model="monitorChild.checked"  style="margin-left: 80px">
 			</div>
 		</div>
 		</div>
 		</div>
 		
-		<div class="panel panel-default">
+<!-- 		<div class="panel panel-default">
 		<div class="panel-heading panel-title">
 				<span class="control-label">是否使用SNMP</span>
 				<input type="checkbox" style="float: right;margin-right: 20px" ng-model="show" ng-click="showEvent()">
@@ -63,7 +63,7 @@
 
 		</div>
 		</div>
-		</div>
+		</div> -->
 		
 		<div class="form-group col-sm-12">
 			<input type="button" ng-click="doCustomize(cusForm.$valid)" class="btn btn-primary btn-block" value="保&nbsp;&nbsp;存"/>

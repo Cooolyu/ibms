@@ -27,4 +27,6 @@ public interface FloorMapper {
 	
 	//查询资产系统项
 	public List<AssetsCategory> selAssetCate();
+	
+	public List<Floor> floorListDueSys (FloorQuery floorQuery);
 }

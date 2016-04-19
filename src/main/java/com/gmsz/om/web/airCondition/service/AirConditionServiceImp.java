@@ -27,8 +27,8 @@ public class AirConditionServiceImp implements AirConditionService{
 
 
 	@Override
-	public List<Floor> floorList(long buildId) {
-		return this.airConditionMapper.floorList(buildId);
+	public List<Floor> floorList(Floor floor) {
+		return this.airConditionMapper.floorList(floor);
 	}
 
 

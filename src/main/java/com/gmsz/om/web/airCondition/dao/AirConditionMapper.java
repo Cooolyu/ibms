@@ -11,7 +11,7 @@ public interface AirConditionMapper {
 	
 	//获取楼栋
 	List<Building> buildList();
-	List<Floor> floorList(long buildId);
+	List<Floor> floorList(Floor floor);
 	List<AirAssets> assetList(long floorId);
 	//保存图标坐标
 	void savePosition (AirAssets airAssets);

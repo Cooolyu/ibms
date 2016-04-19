@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!DOCTYPE mapper    
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
+"http://www.ibatis.com/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="com.gmsz.om.web.assets.dao.AssetsMapper">
 	<select id="findAssetsListByForm" parameterType="long"
@@ -51,9 +52,9 @@
 	<select id="assetList" parameterType="com.gmsz.om.web.assets.bean.AssetQuery"
 		resultType="com.gmsz.om.web.assets.bean.AssetList">
 		select a.id , a.serialNumber, a.status ,a.lifeEndDate, a.name ,m.name
-		as modelName , b.name as brandName from assets as a , assetsModel as m
-		,assetsBrand as b where status >= 1
-		and m.id = a.modelId and b.id = a.brandId
+		as modelName , b.name as brandName , f.name as floorName , d.name as buildingName
+		from assets as a , assetsModel as m ,assetsBrand as b , floor as f ,building as d
+		where a.status >= 1 and m.id = a.modelId and b.id = a.brandId and a.floorId=f.id and f.buildingId=d.id
 		<if test="serialNum != null and serialNum != ''">
 			<![CDATA[and a.serialNumber = #{serialNum} ]]>
 		</if>
@@ -88,8 +89,8 @@
 
 	<insert id="addAsset" parameterType="com.gmsz.om.common.beans.Assets"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into assets (name , serialNumber , categoryId , modelId , brandId , position , memo , status , addDate , lifeEndDate ) 
-		values (#{name} , #{serialNumber} , #{categoryId} , #{model} , #{brandId} , #{position} , #{memo} , #{status} , #{addDate} , #{lifeEndDate} )
+		insert into assets (name ,  categoryId , modelId , brandId , position , memo , status , addDate , lifeEndDate , floorId ) 
+		values (#{name} ,  #{categoryId} , #{model} , #{brandId} , #{position} , #{memo} , #{status} , #{addDate} , #{lifeEndDate} ,#{floorId} )
 	</insert>
 	
 	<select id="assetDetails" parameterType="long"
@@ -102,18 +103,59 @@
 	</select>
 	
 	<select id="assetProperties" resultType="com.gmsz.om.web.assets.bean.AssetProperties" parameterType="long">
-		select a.value , d.name , a.assetsId from assetsProperties as a , dictionary as d where a.assetsId = #{assetId} and a.dictionaryId = d.id
+		select a.id, a.value , d.name , a.assetsId , a.dictionaryId from assetsProperties as a , dictionary as d where a.assetsId = #{assetId} and a.dictionaryId = d.id
 	</select>
 	
 	<select id="monitorChild" resultType="com.gmsz.om.web.assets.bean.AssetDictionary" >
-		select * from dictionary where parentId = 1
+		select * from dictionary where parentId = 1 
 	</select>
 	
 	<select id="propChild" resultType="com.gmsz.om.web.assets.bean.AssetDictionary" >
-		select * from dictionary where parentId = 3
+		select * from dictionary where parentId = 3 
 	</select>
 	
 	<select id="snmpChild" parameterType="long" resultType="com.gmsz.om.common.beans.SnmpPropertis" >
 		select * from snmpProperties where assetsId=#{assetId} and status = 1;
 	</select>
+	
+	<insert id="addLocation" parameterType="com.gmsz.om.common.beans.AssetLocation" useGeneratedKeys="true" keyProperty="id">
+		insert into location (assetsId, locationX , locationY , status) values (#{assetId} , #{locationX} , #{locationY},1)
+	</insert>
+	
+	<select id="selectByName" parameterType="com.gmsz.om.common.beans.Assets" resultType="int">
+		select count(*) from assets where name = #{name} and floorId=#{floorId} and status>0;
+	</select>
+	
+	<select id="selectAByName" parameterType="com.gmsz.om.common.beans.Assets" resultType="com.gmsz.om.common.beans.Assets">
+		select * from assets where name = #{name} and floorId=#{floorId} and status>0;
+	</select>
+	
+	<update id="delAsset" parameterType="long">
+		update assets set status='0' where id=#{assetId};
+	</update>
+	
+	<select id="getParameter" parameterType="long" resultType="com.gmsz.om.common.beans.Assets">
+		select * from assets where status=1 and parentId =#{assetId};
+	</select>
+	
+	<insert id="addDictionary" parameterType="com.gmsz.om.common.beans.Assets" useGeneratedKeys="true" keyProperty="id">
+		insert into dictionary (name , parentId,status,assetId) values (#{name},3,1,#{id})
+	</insert>
+	
+	<update id="delLocation" parameterType="long">
+		update location set status='0' where assetsId=#{assetId};
+	</update>
+	
+	<update id="delDictionary" parameterType="long">
+		update dictionary set status=0 where assetId=#{assetId};
+	</update>
+	
+	<insert id="insertAssetProp" parameterType="com.gmsz.om.common.beans.AssetProp" useGeneratedKeys="true" keyProperty="id">
+		insert into assetsProperties(value , assetsId , dictionaryId) values(#{value} ,#{assetId},#{dictionaryId});
+	</insert>
+	
+	<update id="updateAssetProp" parameterType="com.gmsz.om.common.beans.AssetProp">
+		update assetsProperties set value=#{value} where id=#{id};
+	</update>
+	
 </mapper>

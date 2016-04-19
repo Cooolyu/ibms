@@ -38,11 +38,11 @@ public class FloorController {
 	@Resource
 	private CommonService commonService;
 	
-	@RequestMapping(value="findFloors")
-	@ResponseBody
-	public List<Floor> findFloorList(@RequestParam("buildId")Long buildId) {
-		return this.findFloorList(buildId);
-	}
+//	@RequestMapping(value="findFloors")
+//	@ResponseBody
+//	public List<Floor> findFloorList(@RequestParam("buildId")Long buildId) {
+//		return this.findFloorList(buildId);
+//	}
 	
 	@RequestMapping(value="/show/{buildId}")
 	public ModelAndView show (@PathVariable long buildId){
@@ -120,6 +120,12 @@ public class FloorController {
 	@ResponseBody
 	public List<AssetsCategory> selAssetCate(){
 		return this.floorService.selAssetCate();
+	}
+	
+	@RequestMapping(value = "floorListDueSys")
+	@ResponseBody
+	public List<Floor> floorListDueSys(@ModelAttribute("floorQuery") FloorQuery floorQuery){
+		return this.floorService.floorListDueSys(floorQuery);
 	}
 	
 }

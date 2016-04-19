@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +21,7 @@ import com.gmsz.om.common.beans.AssetsModel;
 import com.gmsz.om.common.beans.Pagination;
 import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.common.beans.SnmpPropertis;
+import com.gmsz.om.web.assets.bean.AssetCusQuery;
 import com.gmsz.om.web.assets.bean.AssetDictionary;
 import com.gmsz.om.web.assets.bean.AssetList;
 import com.gmsz.om.web.assets.bean.AssetProperties;
@@ -31,6 +33,7 @@ import com.gmsz.om.web.common.service.CommonService;
 @Controller
 @RequestMapping(value="asset")
 public class AssetController {
+	
 	
 	@SuppressWarnings("deprecation")
 	private static final Logger LOG = LoggerFactory.getLogger(AssetController.class);
@@ -117,7 +120,7 @@ public class AssetController {
 	@RequestMapping(value = "snmpChild")
 	@ResponseBody
 	public List<SnmpPropertis> snmpChild(@RequestParam("assetId") long assetId){
-		LOG.info(assetsService.snmpChild(assetId).size()+"");
+		LOG.info(assetsService.snmpChild(assetId).size()+"--------");
 		return assetsService.snmpChild(assetId);
 	}
 	
@@ -125,5 +128,24 @@ public class AssetController {
 	@ResponseBody
 	public void assetCustomize(@ModelAttribute("cusQuery") CusQuery cusQuery){
 		System.out.println(cusQuery.toString());
+	}
+	
+	@RequestMapping(value = "delAsset")
+	@ResponseBody
+	public Result delAsset (@RequestParam("assetId") long assetId){
+		return this.assetsService.delAsset(assetId);
+	}
+	
+	@RequestMapping(value="getParameter")
+	@ResponseBody
+	public List<Assets> getParameter(@RequestParam("assetId") long assetId){
+		System.out.println("------->"+assetId);
+		return this.assetsService.getParameter(assetId);
+	}
+	
+	@RequestMapping(value="uiAssetProp")
+	@ResponseBody
+	public Result uiAssetProp(@RequestBody AssetCusQuery assetCusQuery){
+ 		return this.assetsService.uiAssetCus(assetCusQuery);
 	}
 }

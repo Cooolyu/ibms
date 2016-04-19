@@ -9,7 +9,6 @@ public class AssetDictionary {
 	private String name;
 	private String code;
 	private long parentId;
-	private long orderNum;
 
 	public long getId() {
 		return id;
@@ -43,12 +42,5 @@ public class AssetDictionary {
 		this.parentId = parentId;
 	}
 
-	public long getOrderNum() {
-		return orderNum;
-	}
-
-	public void setOrderNum(long orderNum) {
-		this.orderNum = orderNum;
-	}
 
 }
