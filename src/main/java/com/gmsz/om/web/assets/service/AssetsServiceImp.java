@@ -17,6 +17,7 @@ import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.common.beans.SnmpPropertis;
 import com.gmsz.om.common.constant.StateDefine;
 import com.gmsz.om.web.assets.bean.AssetCusQuery;
+import com.gmsz.om.web.assets.bean.AssetDicIdAndName;
 import com.gmsz.om.web.assets.bean.AssetDictionary;
 import com.gmsz.om.web.assets.bean.AssetList;
 import com.gmsz.om.web.assets.bean.AssetProperties;
@@ -197,17 +198,27 @@ public class AssetsServiceImp implements AssetsService {
 	@Transactional(rollbackFor=Exception.class)
 	public Result uiAssetCus(AssetCusQuery assetCusQuery) {
 		Result result = new Result(StateDefine.FLAG_SUCCESS ,true);
-		//更新资产属性项
 		for(int i=0;i<assetCusQuery.getAssetProps().size();i++){
+			//更新资产属性项
 			if(assetCusQuery.getAssetProps().get(i).getId() != 0){
-				AssetProp assetProp = assetCusQuery.getAssetProps().get(i);
-				System.err.println(assetProp.getId()+assetProp.getValue());
 				this.assetsMapper.updateAssetProp(assetCusQuery.getAssetProps().get(i));
+				this.assetsMapper.updateOpcmap(assetCusQuery.getAssetProps().get(i));
 			}else{
 				this.assetsMapper.insertAssetProp(assetCusQuery.getAssetProps().get(i));
+				this.assetsMapper.insertOpcmap(assetCusQuery.getAssetProps().get(i));
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public List<AssetDicIdAndName> dictionaryIdAndName(long assetId) {
+		return this.assetsMapper.dictionaryIdAndName(assetId);
+	}
+
+	@Override
+	public Assets findAssetById(long assetId) {
+		return this.assetsMapper.findAssetById(assetId);
 	}
 
 

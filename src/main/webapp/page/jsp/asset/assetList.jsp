@@ -14,6 +14,7 @@
 <jsp:param name="module1" value="/page/jsp/asset/assetDetails.jsp"/>
 <jsp:param name="module2" value="/page/jsp/asset/addAsset.jsp"/>
 <jsp:param name="module3" value="/page/jsp/asset/assetCustomize.jsp"/>
+<jsp:param name="module4" value="/page/jsp/asset/assetModify.jsp"/>
 </jsp:include>
 
 

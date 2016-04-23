@@ -1,6 +1,7 @@
-<!DOCTYPE mapper    
-PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
-"http://www.ibatis.com/dtd/ibatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gmsz.om.web.assets.dao.AssetsMapper">
 	<select id="findAssetsListByForm" parameterType="long"
@@ -158,4 +159,21 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		update assetsProperties set value=#{value} where id=#{id};
 	</update>
 	
+	<insert id="insertOpcmap" parameterType="com.gmsz.om.common.beans.AssetProp" useGeneratedKeys="true" keyProperty="id">
+		insert into opcmap(serverId , itemName , dictionaryId ,assetsId) values(1,#{value},#{dictionaryId},#{assetId});
+	</insert>
+	
+	<update id="updateOpcmap" parameterType="com.gmsz.om.common.beans.AssetProp">
+		update opcmap set itemName=#{value} where dictionaryId=#{dictionaryId} and assetsId=#{assetId}
+	</update>
+	
+	<select id="dictionaryIdAndName" parameterType="long" resultType="com.gmsz.om.web.assets.bean.AssetDicIdAndName">
+		select d.id as dictionaryId, d.name ,d.code 
+		from dictionary as d, assetsProperties as a
+		where a.assetsId=#{assetId} and a.dictionaryId = d.id;
+	</select>
+	
+	<select id="findAssetById" parameterType="long" resultType="com.gmsz.om.common.beans.Assets">
+		select * from assets where id=#{assetId};
+	</select>
 </mapper>

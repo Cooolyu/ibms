@@ -10,6 +10,7 @@ import com.gmsz.om.common.beans.AssetsModel;
 import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.common.beans.SnmpPropertis;
 import com.gmsz.om.web.assets.bean.AssetCusQuery;
+import com.gmsz.om.web.assets.bean.AssetDicIdAndName;
 import com.gmsz.om.web.assets.bean.AssetDictionary;
 import com.gmsz.om.web.assets.bean.AssetList;
 import com.gmsz.om.web.assets.bean.AssetProperties;
@@ -68,4 +69,6 @@ public interface AssetsService {
 	public void delDictionary(long assetId);
 	
 	public Result uiAssetCus (AssetCusQuery assetCusQuery);
+	public List<AssetDicIdAndName> dictionaryIdAndName(long assetId);
+	public Assets findAssetById(long assetId);
 }

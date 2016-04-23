@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
+import com.gmsz.om.common.beans.AssetProp;
 import com.gmsz.om.common.beans.Building;
 import com.gmsz.om.common.beans.Floor;
 import com.gmsz.om.common.beans.Result;
@@ -43,6 +44,12 @@ public class AirConditionServiceImp implements AirConditionService{
 		this.airConditionMapper.savePosition(airAssets);
 		Result result = new Result(StateDefine.FLAG_SUCCESS , true);
 		return result;
+	}
+
+
+	@Override
+	public List<AssetProp> assetPropList(long assetId) {
+		return this.airConditionMapper.assetPropList(assetId);
 	}
 
 }

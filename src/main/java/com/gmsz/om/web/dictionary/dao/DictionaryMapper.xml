@@ -1,11 +1,32 @@
-<!DOCTYPE mapper    
-PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
-"http://www.ibatis.com/dtd/ibatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gmsz.om.web.dictionary.dao.DictionaryMapper">
 	
 	<select id="findDictionaryByCode" resultType="com.gmsz.om.common.beans.Dictionary" parameterType="string">
 		select * from dictionary where code = #{code}
+	</select>
+	
+	<insert id="insertPdict"  parameterType="com.gmsz.om.common.beans.Dictionary" useGeneratedKeys="true" keyProperty="id">
+		insert into dictionary (name , code) values(#{name},#{code})
+	</insert>
+	
+	<insert id="insertCdict" parameterType="com.gmsz.om.common.beans.Dictionary" useGeneratedKeys="true" keyProperty="id">
+		insert into dictionary (name , code , parentId) values(#{name},#{code},#{parentId});
+	</insert>
+	
+	<update id="updateCdict" parameterType="com.gmsz.om.common.beans.Dictionary">
+		update dictionary set (name , code) values(#{name},#{code}) where id=#{id}
+	</update>
+	
+	<select id="pdictList" resultType="com.gmsz.om.common.beans.Dictionary">
+		select * from dictionary where parentId=0;
+	</select>
+	
+	<select id="cdictList" resultType="com.gmsz.om.common.beans.Dictionary" parameterType="long">
+		select * from dictionary where parentId=#{pId};		
 	</select>
 	
 </mapper>

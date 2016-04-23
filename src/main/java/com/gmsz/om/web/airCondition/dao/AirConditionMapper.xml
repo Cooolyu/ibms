@@ -22,4 +22,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		update location set locationX = #{locationX} , locationY = #{locationY} where assetsId = #{assetId};
 	</update>
 
+	<select id="assetPropList" parameterType="long" resultType="com.gmsz.om.common.beans.AssetProp">
+		select * from assetsproperties where assetsId=#{assetId} and dictionaryId=11 
+	</select>
 </mapper>

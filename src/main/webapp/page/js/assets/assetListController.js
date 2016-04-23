@@ -56,16 +56,7 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		page($scope.pagination);
 	};
 	
-	/**
-	 * 展开修改页
-	 */
-	$scope.modifyBuild = {};
-	$scope.goChange = function(index) {
-		$scope.rightPart = 'modify';
-		pageutil.showRightBarAn('楼栋管理');
-		var modifyBuild = $scope.builds[index];
-		angular.copy(modifyBuild, $scope.modifyBuild);
-	};
+
 	
 	/**
 	 * 展开添加页
@@ -174,6 +165,8 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	 */
 	$scope.goCustomize = function (index , params) {
 		
+		alert(document.cookie)
+		
 		$scope.assetId = $scope.assets[index].id;
 
 		$scope.rightPart = 'customize';
@@ -225,12 +218,12 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		if ($scope.propChild.id == 0) {
 			return;	
 		}
-//		for(var i=0; i<$scope.assetProps.length; i++){
-//			if($scope.assetProps[i].name == $scope.propChild.name){
-//				alert("已添加，请重新选择")
-//				return;
-//			}
-//		}
+		for(var i=0; i<$scope.assetProps.length; i++){
+			if($scope.assetProps[i].name == $scope.propChild.name){
+				alert("已添加，请重新选择")
+				return;
+			}
+		}
 		var assetProp = {assetsId:$scope.assetId,code:'',dictionaryId:$scope.propChild.id,id:0,name:$scope.propChild.name,orderNum:'',parentId:'',value:""};
 		$scope.assetProps.push(assetProp);
 	}
@@ -300,7 +293,7 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		var subForm = {};
 		subForm.assetProps = assetProps;
 
-//		alert(JSON.stringify(subForm)+"---");
+		alert(JSON.stringify(subForm)+"---");
 		 $.ajax({  
 		        type : 'POST',  
 		        contentType : 'application/json',  
@@ -309,75 +302,36 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		        dataType : 'json',  
 		        data : JSON.stringify(subForm),  
 		        success : function(data) {  
-		         
-		        },  
+		        	if (data.resultValue == true) {
+						pageutil.showTip('更新成功');
+						location.reload();
+		        	}
+		        },
 		        error : function() {  
-		            alert('Err...');  
+		            alert('更新失败');  
 		        }  
 		    }); 
 
 	}
 	
 /**---------------------------------------------------------资产修改页---------------------------------------------------**/
-    
 	/**
-	 * 修改页
+	 * 展开修改页
 	 */
-	$scope.doChange = function($vaild){
-		if($scope.modifyBuild.name == null || $scope.modifyBuild.name == ""){
-			alert('楼栋名不能为空');			
-		}else{
-			//修改备注
-			if($scope.modifyBuild.name == $scope.build.name){
-				checkModifyName($scope.modifyBuild.name);
-			}else{
-				//修改楼名
-				var url = commonutil.actionPath + "/building/getBuildingList";
-				var select = {};
-				select.selection = $scope.modifyBuild.name;
-				anajax.doajax(url, select , function(data) {
-					$scope.builds2 = data;
-					if($scope.builds2.length >= 1){
-						alert("该楼栋已经存在")
-						$scope.builds2 = null;
-					}else{
-						checkModifyName($scope.modifyBuild.name);
-					}
-				});
-				
-			}		
-		}
-	}
-	
-	
-	/**
-	 * 验证修改的楼栋名
-	 */
-	var checkModifyName = function(buildname){
-		$scope.modifyBuild.id = $scope.build.id;
-		var url = commonutil.actionPath + '/building/updateBuild';
-		anajax.doajax(url, $scope.modifyBuild, function(data) {
-			if (data.resultValue == true) {
-				pageutil.showTip('修改成功');
-				pageutil.hideRightBar();
-				query(buildQuery);
-			} else {
-				alert(data.message);
-			}
-		});
-	}
-	
-	/**
-	 * 验证楼名
-	 */
-	var checkBuildName = function(buildName) {
-		var flag = true;
-		if (buildName.length == 0) {
-			alert('楼名不可为空!');
-			flag = false;
-		}
-		return flag;
+	$scope.goChange = function(index) {
+		$scope.rightPart = 'modify';
+		pageutil.showRightBarAn('资产修改');
 	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 执行删除操作

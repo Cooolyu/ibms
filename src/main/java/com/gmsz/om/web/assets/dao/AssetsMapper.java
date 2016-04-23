@@ -9,6 +9,7 @@ import com.gmsz.om.common.beans.AssetsBrand;
 import com.gmsz.om.common.beans.AssetsCategory;
 import com.gmsz.om.common.beans.AssetsModel;
 import com.gmsz.om.common.beans.SnmpPropertis;
+import com.gmsz.om.web.assets.bean.AssetDicIdAndName;
 import com.gmsz.om.web.assets.bean.AssetDictionary;
 import com.gmsz.om.web.assets.bean.AssetList;
 import com.gmsz.om.web.assets.bean.AssetProperties;
@@ -71,4 +72,10 @@ public interface AssetsMapper {
 	//更新插入资产自定义属性
 	void updateAssetProp (AssetProp assetProp);
 	void insertAssetProp (AssetProp assetProp);
+	void insertOpcmap(AssetProp assetProp);
+	void updateOpcmap(AssetProp assetProp);
+	
+	//查询设备对应的参数的dictionaryId，字典名称和code
+	List<AssetDicIdAndName> dictionaryIdAndName(long assetId);
+	Assets findAssetById (long assetId);
 }

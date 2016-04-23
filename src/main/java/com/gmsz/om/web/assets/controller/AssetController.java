@@ -22,6 +22,7 @@ import com.gmsz.om.common.beans.Pagination;
 import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.common.beans.SnmpPropertis;
 import com.gmsz.om.web.assets.bean.AssetCusQuery;
+import com.gmsz.om.web.assets.bean.AssetDicIdAndName;
 import com.gmsz.om.web.assets.bean.AssetDictionary;
 import com.gmsz.om.web.assets.bean.AssetList;
 import com.gmsz.om.web.assets.bean.AssetProperties;
@@ -139,7 +140,7 @@ public class AssetController {
 	@RequestMapping(value="getParameter")
 	@ResponseBody
 	public List<Assets> getParameter(@RequestParam("assetId") long assetId){
-		System.out.println("------->"+assetId);
+//		System.out.println("------->"+assetId);
 		return this.assetsService.getParameter(assetId);
 	}
 	
@@ -147,5 +148,17 @@ public class AssetController {
 	@ResponseBody
 	public Result uiAssetProp(@RequestBody AssetCusQuery assetCusQuery){
  		return this.assetsService.uiAssetCus(assetCusQuery);
+	}
+	
+	@RequestMapping(value="dictionaryIdAndName")
+	@ResponseBody
+	public List<AssetDicIdAndName> dictionaryIdAndName(@RequestParam long assetId){
+		return this.assetsService.dictionaryIdAndName(assetId);
+	}
+	
+	@RequestMapping(value="findAssetById")
+	@ResponseBody
+	public Assets findAssetById(@RequestParam long assetId){
+		return this.assetsService.findAssetById(assetId);
 	}
 }

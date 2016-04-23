@@ -18,9 +18,6 @@
 
 	<input id="sysModuleId" style="hidden" value="${sysModuleId}" />
 	<jsp:include page="<%=widgetHeader%>"/>
-	<jsp:include page="<%=widgetAnRightBar%>">
-	<jsp:param name="module1" value=""/>
-	</jsp:include>
 	
 	<div class="lay-wrap">
 		<div class="lay-left col-xs-1 ">
@@ -127,11 +124,42 @@
     <div class="modal-content">
     		<div class="modal-header">
         		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        		<h4 class="modal-title" id="gridSystemModalLabel" >{{asvName}}</h4>
+        		<h4 class="modal-title">{{asvName}}</h4>
       	</div>
       	<div class="modal-body">
         		<div class="container-fluid" id="viewDiv">
-        		<img style="max-width:100%;max-height:100%; auto " src="<%=pagePath%>/{{viewFloorUrl}}">
+        		<div style="margin-left: 10%;margin-top: 10px;">
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水供水温度:</label>
+        			<label id="fwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水供水压力:</label>
+        			<label id="fwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷凝温度:</label>
+        			<label id="condTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        		</div>
+        		<div style="margin-left: 10%;margin-top: 10px;">
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水回水温度:</label>
+        			<label id="rewaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水回水压力:</label>
+        			<label id="rewaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">蒸发温度:</label>
+        			<label id="evatTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        		</div>
+        		<div style="margin-left: 10%;margin-top: 10px;">
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水供水温度:</label>
+        			<label id="coolwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水供水压力:</label>
+        			<label id="coolwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷凝压力:</label>
+        			<label id="condPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        		</div>
+        		<div style="margin-left: 10%;margin-top: 10px;">
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水回水温度:</label>
+        			<label id="rcoolwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水回水压力:</label>
+        			<label id="rcoolwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">蒸发压力:</label>
+        			<label id="evapPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        		</div>
         		</div>
       	</div>
         

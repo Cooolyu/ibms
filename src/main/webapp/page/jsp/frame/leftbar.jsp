@@ -5,7 +5,7 @@
 
 
 
-	<div class="lay-left-item">
+	<%-- <div class="lay-left-item">
 		<a class="lay-left-menu<c:if test="${param.module=='alarm'}"> com-active</c:if>" href="<%=actionPath %>/alarm/show/${param.buildId}?floorId=${param.floorId}">
 			<img class="lay-left-menu-img" src="<%=pagePath%>/css/image/
 			<c:if
@@ -43,7 +43,7 @@
 			</c:if>" />
 			<span class="lay-left-menu-text">监控系统</span></a>
 		
-	</div>
+	</div> --%>
 	
 	<div class="lay-left-item">
 		<a class="lay-left-menu<c:if test="${param.module=='buildList'}"> com-active</c:if>" href="<%=actionPath %>/building/show">
@@ -83,6 +83,37 @@
 			<span class="lay-left-menu-text">暖通空调</span></a>
 		
 	</div>
+	
+	<div class="lay-left-item">
+		<a class="lay-left-menu<c:if test="${param.module=='sswShow'}"> com-active</c:if>" href="<%=actionPath %>/ssw/show">
+				<img class="lay-left-menu-img" src="<%=pagePath%>/css/image/
+			<c:if
+				test="${param.module=='sswShow'}">icon_on_04.png
+			</c:if>
+			<c:if
+				test="${param.module!='sswShow'}">icon_off_04.png
+			</c:if>" />
+			<span class="lay-left-menu-text">给水排水</span></a>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+<%-- 	<div class="lay-left-item">
+		<a class="lay-left-menu<c:if test="${param.module=='dictionary'}"> com-active</c:if>" href="<%=actionPath %>/dictionary/show">
+				<img class="lay-left-menu-img" src="<%=pagePath%>/css/image/
+			<c:if
+				test="${param.module=='dictionary'}">icon_on_04.png
+			</c:if>
+			<c:if
+				test="${param.module!='dictionary'}">icon_off_04.png
+			</c:if>" />
+			<span class="lay-left-menu-text">设置</span></a>
+		
+	</div> --%>
 	
 </div>
 <button class="lay-left-down main_down" onclick="leftbar.showDown()"></button>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gmsz.om.common.beans.AssetProp;
 import com.gmsz.om.common.beans.Building;
 import com.gmsz.om.common.beans.Floor;
 import com.gmsz.om.common.beans.Result;
@@ -65,7 +66,6 @@ public class AirConditionController {
 	@RequestMapping(value = "assetList")
 	@ResponseBody
 	public List<AirAssets> assetList(@RequestParam("floorId") long floorId){
-		LOG.info(airConditionService.assetList(floorId).size()+"-----"+floorId);
 		return airConditionService.assetList(floorId);
 	}
 	
@@ -88,6 +88,12 @@ public class AirConditionController {
 		return mv;
 	}
 	
+	@RequestMapping(value="assetProp")
+	@ResponseBody
+	public List<AssetProp> assetPropList(@RequestParam long assetId){
+		System.out.println(this.airConditionService.assetPropList(assetId).size());
+		return this.airConditionService.assetPropList(assetId);
+	}
 	
 }
 	

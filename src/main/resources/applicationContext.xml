@@ -63,7 +63,7 @@
 	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
 		<property name="alias" value="${mysql.alias}" />
 		<property name="driver" value="org.gjt.mm.mysql.Driver" />
-		<property name="driverUrl" value="jdbc:mysql://172.16.120.131:3306/ibmsdev?characterEncoding=UTF-8" />
+		<property name="driverUrl" value="jdbc:mysql://172.16.120.132:3306/ibmsdev?characterEncoding=UTF-8" />
 		<!-- <property name="driverUrl" value="jdbc:mysql://localhost:3306/ibmsdev?characterEncoding=UTF-8" /> -->
 		<property name="user" value="root" />
 		<property name="password" value="root" />

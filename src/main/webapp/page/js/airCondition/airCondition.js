@@ -1,6 +1,6 @@
 var airColdModule = angular.module('airColdModule', ['anajaxService']);
 airColdModule.controller('airColdController', function($scope, $http, anajax) {	
-		
+	
 	//获取楼栋
 	var buildList = function(params) {
 		var url = commonutil.actionPath + "/airCdt/buildList";
@@ -211,13 +211,50 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	/**-------------------------------------显示弹出框-------------------------------------**/
 	
 	var showView = function(iasset) {
-//		alert(iasset.assetId)
 		$scope.asvName = iasset.name;
+		$scope.assetId = iasset.assetId;
+		var url = commonutil.actionPath + "/asset/dictionaryIdAndName";
+		anajax.doajax(url,{'assetId':iasset.assetId}, function(data) {
+			$scope.assetProps = data;
+			bindSocket();
+		});
+		url = commonutil.actionPath + "/asset/"
 		$('#showModal').modal('show');
+		
+		
 	}
 	
-	
-	
+	/**-----------------------------------绑定webSocket----------------------------------**/
+	var bindSocket = function() {
+		var url = 'ws://172.16.120.132:8080/omf/websocket/airCold';
+		var ws = null;
+    		if ('WebSocket' in window)
+    			ws = new WebSocket(url);
+    		else if ('MozWebSocket' in window)
+    			ws = new MozWebSocket(url);
+    		else
+    			//alert('当前浏览器不支持websocket，请使用IE10+、Chrome17+、Firefox7+');
+    			// 用户未登录或者不支持websocket
+    			if (!ws) {
+    				return;
+    			}
+
+    		// 收到消息
+    		ws.onmessage = function(evt) {
+    			if (evt.data) {
+    				var data = evt.data.split("-");
+    				if(data[1] == $scope.assetId){
+    					for(var i=0; i<$scope.assetProps.length;i++){
+    						if($scope.assetProps[i].dictionaryId == data[0])
+    							$("#"+$scope.assetProps[i].code).html(data[2])
+//    							alert(data[2])
+    					}
+    				}
+    			}
+    		};
+    	};
+    	
+   
 	
 	
 	
