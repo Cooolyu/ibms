@@ -226,7 +226,7 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	
 	/**-----------------------------------绑定webSocket----------------------------------**/
 	var bindSocket = function() {
-		var url = 'ws://172.16.120.132:8080/omf/websocket/airCold';
+		var url = 'ws://172.16.120.131:8080/omf/websocket/airCold';
 		var ws = null;
     		if ('WebSocket' in window)
     			ws = new WebSocket(url);

@@ -46,15 +46,28 @@
 	</div> --%>
 	
 	<div class="lay-left-item">
-		<a class="lay-left-menu<c:if test="${param.module=='buildList'}"> com-active</c:if>" href="<%=actionPath %>/building/show">
+		<a class="lay-left-menu<c:if test="${param.module=='buildList'}"> com-active</c:if>" href="<%=actionPath %>/visShow/show">
 				<img class="lay-left-menu-img" src="<%=pagePath%>/css/image/
 			<c:if
-				test="${param.module=='buildList'}">icon_on_04.png
+				test="${param.module=='visShow'}">icon_on_06.png
 			</c:if>
 			<c:if
-				test="${param.module!='buildList'}">icon_off_04.png
+				test="${param.module!='visShow'}">icon_off_06.png
 			</c:if>" />
-			<span class="lay-left-menu-text">楼宇管理系统</span></a>
+			<span class="lay-left-menu-text">数据可视化</span></a>
+		
+	</div>
+	
+	<div class="lay-left-item">
+		<a class="lay-left-menu<c:if test="${param.module=='airCdtShow'}"> com-active</c:if>" href="<%=actionPath %>/airCdt/show">
+				<img class="lay-left-menu-img" src="<%=pagePath%>/css/image/
+			<c:if
+				test="${param.module=='airCdtShow'}">icon_off_02.png
+			</c:if>
+			<c:if
+				test="${param.module!='airCdtShow'}">icon_off_02.png
+			</c:if>" />
+			<span class="lay-left-menu-text">设备信息</span></a>
 		
 	</div>
 	
@@ -62,16 +75,18 @@
 		<a class="lay-left-menu" href="<%=actionPath %>/asset/show">
 				<img class="lay-left-menu-img" src="<%=pagePath%>/css/image/
 			<c:if
-				test="${param.module=='overview'}">icon_on_04.png
+				test="${param.module=='buildtest'}">icon_on_09.png
 			</c:if>
 			<c:if
-				test="${param.module!='overview'}">icon_off_04.png
+				test="${param.module!='buildtest'}">icon_off_09.png
 			</c:if>" />
-			<span class="lay-left-menu-text">资产管理系统</span></a>
+			<span class="lay-left-menu-text">配置管理</span></a>
 		
 	</div>
 	
-	<div class="lay-left-item">
+
+	
+	<%-- <div class="lay-left-item">
 		<a class="lay-left-menu<c:if test="${param.module=='airCdtShow'}"> com-active</c:if>" href="<%=actionPath %>/airCdt/show">
 				<img class="lay-left-menu-img" src="<%=pagePath%>/css/image/
 			<c:if
@@ -97,6 +112,19 @@
 		
 	</div>
 	
+	<div class="lay-left-item">
+		<a class="lay-left-menu<c:if test="${param.module=='tadShow'}"> com-active</c:if>" href="<%=actionPath %>/tad/show">
+				<img class="lay-left-menu-img" src="<%=pagePath%>/css/image/
+			<c:if
+				test="${param.module=='tadShow'}">icon_on_04.png
+			</c:if>
+			<c:if
+				test="${param.module!='tadShow'}">icon_off_04.png
+			</c:if>" />
+			<span class="lay-left-menu-text">变配电</span></a>
+		
+	</div> --%>
+	
 	
 	
 	
@@ -114,6 +142,7 @@
 			<span class="lay-left-menu-text">设置</span></a>
 		
 	</div> --%>
+	
 	
 </div>
 <button class="lay-left-down main_down" onclick="leftbar.showDown()"></button>

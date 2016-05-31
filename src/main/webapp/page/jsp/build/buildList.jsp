@@ -11,6 +11,7 @@
 <body ng-controller="buildListController">
 <jsp:include page="<%=widgetHeader%>"/>
 <jsp:include page="<%=widgetAnRightBar%>">
+
 <jsp:param name="module1" value="/page/jsp/build/changeBuild.jsp"/>
 <jsp:param name="module2" value="/page/jsp/build/addBuild.jsp"/>
 </jsp:include>
@@ -19,13 +20,24 @@
 	<div class="lay-wrap">
 		<div class="lay-left col-xs-1 ">
 			<jsp:include page="../frame/leftbar.jsp">
-			<jsp:param value="buildList" name="module"/>
-			<jsp:param value="1" name="buildId" />
+			<jsp:param value="buildtest" name="module"/>
+			
+			
 		</jsp:include>
+						<div class="lay-sub-menu">
+<!-- 				<div style="margin-left:15px; margin-top: 20px;">
+					<span style="font-size: 20px;font-family:微软雅黑;">暖通空调</span>
+				</div>
+				<hr color=#DDDDDD style="margin-left:5px;margin-right:5px; margin-top:2px; margin-bottom:5px; height: 3px"> -->
+				<div >
+					<a class="com-tab com-tab-default com-tab-sm " style="margin-left:25px; font-size: 15px;font-family:微软雅黑;">楼栋楼层管理</a>
+					<a class="com-tab com-tab-default com-tab-sm " style="margin-left:25px; font-size: 15px;font-family:微软雅黑;" >设备资产管理</a>
+				</div>
+			</div>
 	</div>
 	
-	
-	<div class="lay-main">
+
+	<div class="lay-main lay-has-sub-menu">
  		<div class="panel panel-default">
  		
  		
@@ -86,7 +98,6 @@
 			
 		</div>
 	</div>
-	<jsp:include page="<%=widgetFooter %>"></jsp:include>
 </div>
 </body>
 <script type="text/javascript" src="<%=pagePath%>/js/build/buildListController.js"></script>

@@ -44,4 +44,10 @@ public class MainController {
 	public  Map<String,Object> getCameraData(){
 		return this.mainService.getCameraData();
 	}
+	
+	@RequestMapping(value="test")
+	public ModelAndView test(){
+		ModelAndView mv = new ModelAndView("main/test");
+		return mv;
+	}
 }

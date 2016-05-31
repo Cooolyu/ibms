@@ -77,7 +77,6 @@
 	</div>
 </div>
 </div>
-<jsp:include page="<%=widgetFooter %>"></jsp:include>
 </div>
 </body>
 <script type="text/javascript" src="<%=pagePath%>/thirdparty/sha/sha1.js"></script>

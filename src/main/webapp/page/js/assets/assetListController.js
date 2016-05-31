@@ -7,7 +7,7 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	
 	
 	/**
-	 * 查询楼栋列表
+	 * 查询资产列表
 	 */
 	var query = function(params) {
 		var url = commonutil.actionPath + "/asset/assetList";
@@ -321,16 +321,32 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	$scope.goChange = function(index) {
 		$scope.rightPart = 'modify';
 		pageutil.showRightBarAn('资产修改');
+		$scope.assetId = $scope.assets[index].id;
+		$scope.mStatuss = [{'id':1,'name':"报废"},{'id':2,'name':"使用中"},{'id':3,'name':"备用中"},{'id':4,'name':"维护中"}]
+		for(var i=0;i<$scope.mStatuss.length;i++){
+			if($scope.mStatuss[i].id == $scope.assets[index].status)
+				$scope.mStatus = $scope.mStatuss[i];
+		}
+		var date = new Date($scope.assets[index].lifeEndDate)
+		$scope.mendDate = formatDate(date);
+		if($scope.assets[index].memo==null)
+			$scope.assets[index].memo==''
+		$scope.mmemo = $scope.assets[index].memo;
 	};
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	//执行修改
+	$scope.doChange = function() {
+		var url = commonutil.actionPath + '/asset/changeAsset';
+		anajax.doajax(url, {"assetId":$scope.assetId,"status":$scope.mStatus.id,"endDate":$scope.mendDate,"memo":$scope.mmemo}, function(data) {
+			if (data.resultValue == true) {
+				pageutil.showTip('修改成功');
+				query(assetQuery);
+			    page(assetQuery);
+			} else {
+				alert(data.message);
+			}
+		});
+	}
 	
 	
 	/**
@@ -397,4 +413,17 @@ assetListModule.filter('isNone',function(){
 			return input;
 	}
 });
+
+//时间格式化
+function   formatDate(now)   {  
+	
+    var   year=now.getFullYear();     
+    var   month=now.getMonth()+1;     
+    var   date=now.getDate();     
+    var   hour=now.getHours();     
+    var   minute=now.getMinutes();     
+    var   second=now.getSeconds();     
+    return   year+"-"+month+"-"+date;     
+    }     
+
 

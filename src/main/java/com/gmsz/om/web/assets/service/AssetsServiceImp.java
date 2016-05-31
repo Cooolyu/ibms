@@ -221,5 +221,12 @@ public class AssetsServiceImp implements AssetsService {
 		return this.assetsMapper.findAssetById(assetId);
 	}
 
+	@Override
+	public Result modifyAsset(Assets assets) {
+		Result result = new Result(StateDefine.FLAG_SUCCESS,true);
+		this.assetsMapper.modifyAsset(assets);
+		return result;
+	}
+
 
 }

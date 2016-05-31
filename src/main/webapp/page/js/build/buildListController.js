@@ -61,6 +61,7 @@ buildListModule.controller('buildListController', function($scope, $http, pagina
 		$scope.rightPart = 'modify';
 		pageutil.showRightBarAn('楼栋管理');
 		var modifyBuild = $scope.builds[index];
+		$scope.build0 = $scope.builds[index];
 		angular.copy(modifyBuild, $scope.modifyBuild);
 	};
 	
@@ -104,7 +105,7 @@ buildListModule.controller('buildListController', function($scope, $http, pagina
 			alert('楼栋名不能为空');			
 		}else{
 			//修改备注
-			if($scope.modifyBuild.name == $scope.build.name){
+			if($scope.modifyBuild.name == $scope.build0.name){
 				checkModifyName($scope.modifyBuild.name);
 			}else{
 				//修改楼名
@@ -130,7 +131,7 @@ buildListModule.controller('buildListController', function($scope, $http, pagina
 	 * 验证修改的楼栋名
 	 */
 	var checkModifyName = function(buildname){
-		$scope.modifyBuild.id = $scope.build.id;
+		$scope.modifyBuild.id = $scope.build0.id;
 		var url = commonutil.actionPath + '/building/updateBuild';
 		anajax.doajax(url, $scope.modifyBuild, function(data) {
 			if (data.resultValue == true) {

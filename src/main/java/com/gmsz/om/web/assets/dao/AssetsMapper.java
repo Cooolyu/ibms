@@ -78,4 +78,5 @@ public interface AssetsMapper {
 	//查询设备对应的参数的dictionaryId，字典名称和code
 	List<AssetDicIdAndName> dictionaryIdAndName(long assetId);
 	Assets findAssetById (long assetId);
+	void	 modifyAsset(Assets assets);
 }

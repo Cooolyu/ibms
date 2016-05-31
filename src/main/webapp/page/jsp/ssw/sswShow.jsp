@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html ng-app="airColdModule">
+<html >
 <head>
 	<%@ include file = "/page/jsp/common/commonvariable.jsp" %>
 	<jsp:include page="<%=commonLib%>"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>暖通空调</title>
+	<title>给水排水</title>
 	<style type="text/css">
 .div {   
         height:25px;   
@@ -14,22 +14,19 @@
  }
 </style>
 </head>
-<body ng-controller="airColdController">
-
+<body >
 	<input id="sysModuleId" style="hidden" value="${sysModuleId}" />
 	<jsp:include page="<%=widgetHeader%>"/>
 	
 	<div class="lay-wrap">
 		<div class="lay-left col-xs-1 ">
 				<jsp:include page="../frame/leftbar.jsp">
-					<jsp:param value="airCdtShow" name="module"/>
+					<jsp:param value="sswShow" name="module"/>
 				</jsp:include>
-				<!-- 引入二级菜单 -->
-				<jsp:include page="/page/jsp/airCondition/airSubMenu.jsp"></jsp:include>
 		</div>
 	</div>
- 
-	<div class="lay-main lay-has-sub-menu" >
+	
+	<div class="lay-main" >
 			<div class="form-inline" >
 				<div class="row">
 					<div class="col-xs-9 col-md-9">
@@ -48,7 +45,7 @@
 					</div>
 					<div class="form-group">
 						<div class="btn-group" role="group" aria-label="...">
-							<button ng-click="chooseFloor(floor)" ng-repeat="floor in floors" type="button" class="btn btn-default">{{floor.name}}</button>
+							<button ng-click="chooseFloor(floor)" ng-repeat="floor in floors" type="button" class="btn btn-default">{{floor.name}}层</button>
 						</div>
 				    </div>
 					</div>
@@ -120,6 +117,7 @@
 		</div>
 		</div>
 
+	<jsp:include page="<%=widgetFooter %>"></jsp:include>
 	
 	<div class="modal fade" id="showModal" role="dialog" aria-labelledby="gridSystemModalLabel">
   	<div class="modal-dialog" role="document">
@@ -132,35 +130,35 @@
         		<div class="container-fluid" id="viewDiv">
         		<div style="margin-left: 10%;margin-top: 10px;">
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水供水温度:</label>
-        			<label id="fwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;">℃</label>
+        			<label id="fwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水供水压力:</label>
-        			<label id="fwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;">Pa</label>
+        			<label id="fwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷凝温度:</label>
-        			<label id="condTemp" style="font: 11pt Microsoft YaHei;width: 16%;">℃</label>
+        			<label id="condTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         		</div>
         		<div style="margin-left: 10%;margin-top: 10px;">
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水回水温度:</label>
-        			<label id="rewaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;">℃</label>
+        			<label id="rewaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水回水压力:</label>
-        			<label id="rewaterPress" style="font: 11pt Microsoft YaHei;width: 16%;">Pa</label>
+        			<label id="rewaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">蒸发温度:</label>
-        			<label id="evatTemp" style="font: 11pt Microsoft YaHei;width: 16%;">℃</label>
+        			<label id="evatTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         		</div>
         		<div style="margin-left: 10%;margin-top: 10px;">
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水供水温度:</label>
-        			<label id="coolwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;">℃</label>
+        			<label id="coolwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水供水压力:</label>
-        			<label id="coolwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;">Pa</label>
+        			<label id="coolwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷凝压力:</label>
-        			<label id="condPress" style="font: 11pt Microsoft YaHei;width: 16%;">Pa</label>
+        			<label id="condPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         		</div>
         		<div style="margin-left: 10%;margin-top: 10px;">
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水回水温度:</label>
-        			<label id="rcoolwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;">℃</label>
+        			<label id="rcoolwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水回水压力:</label>
-        			<label id="rcoolwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;">Pa</label>
+        			<label id="rcoolwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         			<label style="font: 12pt Microsoft YaHei;width: 16%;">蒸发压力:</label>
-        			<label id="evapPress" style="font: 11pt Microsoft YaHei;width: 16%;">Pa</label>
+        			<label id="evapPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
         		</div>
         		</div>
       	</div>
@@ -171,6 +169,6 @@
     </div><!-- /.modal-content -->
   	</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+
 </body>
 </html>
-<script type="text/javascript" src="<%=pagePath %>/js/airCondition/airCondition.js"></script>

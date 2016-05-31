@@ -6,7 +6,7 @@
 		<a class="lay-header-brand" 
 			href = "<%=actionPath %>/main/index"
 		title="IBMS">
-			<img class="lay-header-logo" src="<%=pagePath%>/images/logo.png"> 智能建筑管理系统(IBMS)
+			<img class="lay-header-logo" src="<%=pagePath%>/images/logo.png">智能设施监视系统
 		</a>
 		</c:if>
 		<c:if test="${param.pointId!=null && param.pointId>0}">

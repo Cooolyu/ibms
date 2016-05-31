@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -84,7 +85,7 @@ public class AssetController {
 		return assetsService.getAssetModel();
 	}
 	
-	@RequestMapping(value = "addAsset")
+	@RequestMapping(value = "addAsset",method=RequestMethod.POST)
 	@ResponseBody
 	public Result addAsset(@ModelAttribute("asset") Assets asset){
 		asset.setAddDate(new Date());
@@ -160,5 +161,20 @@ public class AssetController {
 	@ResponseBody
 	public Assets findAssetById(@RequestParam long assetId){
 		return this.assetsService.findAssetById(assetId);
+	}
+	
+	@RequestMapping(value="changeAsset")
+	@ResponseBody
+	public Result changeAsset(@RequestParam long assetId,
+							  @RequestParam int status,
+							  @RequestParam Date endDate,
+							  @RequestParam String memo){
+		System.err.println(assetId+status+endDate.toGMTString()+memo);
+		Assets assets = new Assets();
+		assets.setId(assetId);
+		assets.setStatus(status);
+		assets.setLifeEndDate(endDate);
+		assets.setMemo(memo);
+		return this.assetsService.modifyAsset(assets);
 	}
 }

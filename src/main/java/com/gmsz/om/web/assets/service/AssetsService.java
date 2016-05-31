@@ -71,4 +71,5 @@ public interface AssetsService {
 	public Result uiAssetCus (AssetCusQuery assetCusQuery);
 	public List<AssetDicIdAndName> dictionaryIdAndName(long assetId);
 	public Assets findAssetById(long assetId);
+	public Result modifyAsset(Assets assets);
 }

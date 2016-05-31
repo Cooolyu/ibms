@@ -52,13 +52,10 @@
 
 	<select id="assetList" parameterType="com.gmsz.om.web.assets.bean.AssetQuery"
 		resultType="com.gmsz.om.web.assets.bean.AssetList">
-		select a.id , a.serialNumber, a.status ,a.lifeEndDate, a.name ,m.name
-		as modelName , b.name as brandName , f.name as floorName , d.name as buildingName
+		select a.id , a.status ,a.lifeEndDate, a.name ,m.name
+		as modelName , b.name as brandName , f.name as floorName , d.name as buildingName ,a.memo
 		from assets as a , assetsModel as m ,assetsBrand as b , floor as f ,building as d
 		where a.status >= 1 and m.id = a.modelId and b.id = a.brandId and a.floorId=f.id and f.buildingId=d.id
-		<if test="serialNum != null and serialNum != ''">
-			<![CDATA[and a.serialNumber = #{serialNum} ]]>
-		</if>
 		<if test="assetName != null and assetName != ''">
 			<![CDATA[and a.name = #{assetName} ]]>
 		</if>
@@ -68,9 +65,6 @@
 	<select id="getAssetPages" resultType="long"
 		parameterType="com.gmsz.om.web.assets.bean.AssetQuery">
 		select count(1) from assets where status >= 1
-		<if test="serialNum != null and serialNum != ''">
-			<![CDATA[and serialNumber = #{serialNum} ]]>
-		</if>
 		<if test="assetName != null and assetName != ''">
 			<![CDATA[and name = #{assetName} ]]>
 		</if>
@@ -96,7 +90,7 @@
 	
 	<select id="assetDetails" parameterType="long"
 		resultType="com.gmsz.om.web.assets.bean.AssetList">
-		select a.id , a.serialNumber, a.status ,a.lifeEndDate, a.name ,m.name 
+		select a.id , a.status ,a.lifeEndDate, a.name ,m.name 
 		as modelName , b.name as brandName , c.name as cateName , a.position , a.number
 		 from assets as a , assetsModel as m
 		,assetsBrand as b , assetsCategory as c where status >= 1
@@ -176,4 +170,8 @@
 	<select id="findAssetById" parameterType="long" resultType="com.gmsz.om.common.beans.Assets">
 		select * from assets where id=#{assetId};
 	</select>
+	
+	<update id="modifyAsset" parameterType="com.gmsz.om.common.beans.Assets">
+		update assets set status=#{status} , memo=#{memo} ,lifeEndDate=#{lifeEndDate} where id=#{id};
+	</update>
 </mapper>
