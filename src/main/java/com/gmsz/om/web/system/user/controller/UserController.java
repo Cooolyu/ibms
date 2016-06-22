@@ -114,4 +114,5 @@ public class UserController extends CommonController {
 		OmUserWithRole user = this.userService.getUser(userId);
 		return user.getRoleName() + ": " + user.getUsername();
 	}
+	
 }

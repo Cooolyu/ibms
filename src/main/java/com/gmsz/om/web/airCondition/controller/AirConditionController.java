@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +17,7 @@ import com.gmsz.om.common.beans.Building;
 import com.gmsz.om.common.beans.Floor;
 import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.web.airCondition.beans.AirAssets;
+import com.gmsz.om.web.airCondition.beans.Icon;
 import com.gmsz.om.web.airCondition.service.AirConditionService;
 
 /**
@@ -52,7 +54,7 @@ public class AirConditionController {
 	}
 	
 	//查询相关的楼层
-	@RequestMapping(value = "floorList")
+	@RequestMapping(value = "floorList",method=RequestMethod.POST)
 	@ResponseBody
 	public List<Floor> floorList(@RequestParam("buildId") long buildId,
 								 @RequestParam("sysModuleId") long sysModuleId){
@@ -91,9 +93,14 @@ public class AirConditionController {
 	@RequestMapping(value="assetProp")
 	@ResponseBody
 	public List<AssetProp> assetPropList(@RequestParam long assetId){
-		System.out.println(this.airConditionService.assetPropList(assetId).size());
 		return this.airConditionService.assetPropList(assetId);
 	}
 	
+	
+	@RequestMapping(value="iconList")
+	@ResponseBody
+	public List<Icon> iconList(@RequestParam("assetId") long assetId){
+		return this.airConditionService.iconList(assetId);
+	}
 }
 	

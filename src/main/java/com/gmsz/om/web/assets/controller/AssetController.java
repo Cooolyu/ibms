@@ -169,7 +169,7 @@ public class AssetController {
 							  @RequestParam int status,
 							  @RequestParam Date endDate,
 							  @RequestParam String memo){
-		System.err.println(assetId+status+endDate.toGMTString()+memo);
+		
 		Assets assets = new Assets();
 		assets.setId(assetId);
 		assets.setStatus(status);

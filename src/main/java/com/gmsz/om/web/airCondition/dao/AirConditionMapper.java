@@ -7,6 +7,7 @@ import com.gmsz.om.common.beans.Building;
 import com.gmsz.om.common.beans.Floor;
 import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.web.airCondition.beans.AirAssets;
+import com.gmsz.om.web.airCondition.beans.Icon;
 
 public interface AirConditionMapper {
 	
@@ -17,4 +18,6 @@ public interface AirConditionMapper {
 	//保存图标坐标
 	void savePosition (AirAssets airAssets);
 	List<AssetProp> assetPropList(long assetId);
+	
+	List<Icon> iconList(long assetId);
 }

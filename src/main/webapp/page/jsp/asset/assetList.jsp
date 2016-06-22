@@ -22,20 +22,9 @@
 
 
 	<div class="lay-left col-xs-1">
-			<jsp:include page="../frame/leftbar.jsp">
-			<jsp:param value="alarmlist" name="module"/>
-			<jsp:param value="1" name="buildId" />
-		</jsp:include>
-								<div class="lay-sub-menu">
-<!-- 				<div style="margin-left:15px; margin-top: 20px;">
-					<span style="font-size: 20px;font-family:微软雅黑;">暖通空调</span>
-				</div>
-				<hr color=#DDDDDD style="margin-left:5px;margin-right:5px; margin-top:2px; margin-bottom:5px; height: 3px"> -->
-				<div >
-					<a class="com-tab com-tab-default com-tab-sm " style="margin-left:25px; font-size: 15px;font-family:微软雅黑;">楼栋楼层管理</a>
-					<a class="com-tab com-tab-default com-tab-sm " style="margin-left:25px; font-size: 15px;font-family:微软雅黑;" >设备资产管理</a>
-				</div>
-			</div>
+			<jsp:include page="../build/buildSubMenu.jsp">
+				<jsp:param value="asset" name="main" />
+			</jsp:include>
 	</div>
 	
 	

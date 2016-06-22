@@ -18,7 +18,7 @@ public class Pagination {
 	/** * 查询从第几个开始 */
 	private int start = 0;
 	/** * 每页多少个 */
-	private int count = 30;
+	private int count = 10;
 	/** * 总共多少页 */
 	private int pages = 0;
 	/** * 当前第几页 */

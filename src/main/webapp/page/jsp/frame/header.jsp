@@ -43,15 +43,7 @@
 					<i class="glyphicon glyphicon-cog"></i></a>
 			</li>
 			
-			<li id = "warn">
-			  
-				<a href="<%=actionPath%>/alarm/list" title="报警列表">
-					<i class="glyphicon glyphicon-time"></i></a>
-			<!--
-			<a href="<%=actionPath%>/alarm/list">
-			<img alt="" src="<%=pagePath %>/images/AnimationAlarm.gif" width="25px"></a>
-			-->
-			</li>
+
 			<li>
 				<a href="javascript:void(0)" class="lay-header-avatar" data-toggle="dropdown" onclick="header.getUserName();">
 					<img src="<%=pagePath%>/images/avatar.png" alt="avatar"/>

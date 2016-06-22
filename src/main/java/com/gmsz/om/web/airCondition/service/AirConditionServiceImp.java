@@ -12,6 +12,7 @@ import com.gmsz.om.common.beans.Floor;
 import com.gmsz.om.common.beans.Result;
 import com.gmsz.om.common.constant.StateDefine;
 import com.gmsz.om.web.airCondition.beans.AirAssets;
+import com.gmsz.om.web.airCondition.beans.Icon;
 import com.gmsz.om.web.airCondition.dao.AirConditionMapper;
 
 @Component
@@ -50,6 +51,12 @@ public class AirConditionServiceImp implements AirConditionService{
 	@Override
 	public List<AssetProp> assetPropList(long assetId) {
 		return this.airConditionMapper.assetPropList(assetId);
+	}
+
+
+	@Override
+	public List<Icon> iconList(long assetId) {
+		return this.airConditionMapper.iconList(assetId);
 	}
 
 }

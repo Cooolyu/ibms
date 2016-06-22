@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html >
+<html ng-app="airColdModule">
 <head>
 	<%@ include file = "/page/jsp/common/commonvariable.jsp" %>
 	<jsp:include page="<%=commonLib%>"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>给水排水</title>
+	<title>暖通空调</title>
 	<style type="text/css">
 .div {   
         height:25px;   
@@ -14,19 +14,22 @@
  }
 </style>
 </head>
-<body >
+<body ng-controller="airColdController">
+
 	<input id="sysModuleId" style="hidden" value="${sysModuleId}" />
 	<jsp:include page="<%=widgetHeader%>"/>
 	
 	<div class="lay-wrap">
 		<div class="lay-left col-xs-1 ">
-				<jsp:include page="../frame/leftbar.jsp">
-					<jsp:param value="sswShow" name="module"/>
+
+				<jsp:include page="../airCondition/airSubMenu.jsp">
+					<jsp:param value="sswShow" name="main"/>
 				</jsp:include>
+				
 		</div>
 	</div>
-	
-	<div class="lay-main" >
+ 
+	<div class="lay-main lay-has-sub-menu" >
 			<div class="form-inline" >
 				<div class="row">
 					<div class="col-xs-9 col-md-9">
@@ -45,7 +48,7 @@
 					</div>
 					<div class="form-group">
 						<div class="btn-group" role="group" aria-label="...">
-							<button ng-click="chooseFloor(floor)" ng-repeat="floor in floors" type="button" class="btn btn-default">{{floor.name}}层</button>
+							<button ng-click="chooseFloor(floor)" ng-repeat="floor in floors" type="button" class="btn btn-default">{{floor.name}}</button>
 						</div>
 				    </div>
 					</div>
@@ -70,7 +73,7 @@
 				<div id="panel1" class="panel panel-default">
 	    				<div id="head1" class="panel-heading">
 	     				 <h4 class="panel-title" style="text-align: center;">
-	       					 <a data-toggle="collapse" data-toggle="collapse"  style="font: 11pt Microsoft YaHei;">冷源设备列表</a>
+	       					 <a data-toggle="collapse" data-toggle="collapse"  style="font: 11pt Microsoft YaHei;">设备待排布列表</a>
 	      				</h4>
 	    				</div>
 
@@ -87,19 +90,19 @@
 					</div>
 				</div>
 		
-				<div id="panel2" class="panel panel-default">
-					<div id="head2" class="panel-heading">
+				<div id="panel2" class="panel panel-default" >
+					<div id="head2" class="panel-heading" >
      				 	<h4 class="panel-title" style="text-align: center;">
-       						<a data-toggle="collapse" data-toggle="collapse"  style="font: 11pt Microsoft YaHei;">AKB0048 空调机组</a>
+       						<a data-toggle="collapse" data-toggle="collapse"  style="font: 11pt Microsoft YaHei;">{{airColdsName}}</a>
       					</h4>
     					</div>
 					<div id="body2" class="panel-body">
 						<div ng-repeat="airCold in airColds" class="form-inline">
 						<div class="row">
-							<label class=" control-label col-sm-3">{{airCold.name}}:</label>
-				 			<p class="form-control-static col-sm-3" >{{airCold.value}}</p>
-							<label class=" control-label col-sm-3">{{airCold.name2}}:</label>
-				 			<p class="form-control-static col-sm-3">{{airCold.value2}}</p>
+							<label class=" control-label col-sm-4">{{airCold.name}}</label>
+				 			<p class="form-control-static col-sm-2" >{{airCold.value}}</p>
+							<label class=" control-label col-sm-4">{{airCold.name2}}</label>
+				 			<p class="form-control-static col-sm-2">{{airCold.value2}}</p>
 						</div>
 						</div>
 					</div>
@@ -117,7 +120,6 @@
 		</div>
 		</div>
 
-	<jsp:include page="<%=widgetFooter %>"></jsp:include>
 	
 	<div class="modal fade" id="showModal" role="dialog" aria-labelledby="gridSystemModalLabel">
   	<div class="modal-dialog" role="document">
@@ -129,36 +131,48 @@
       	<div class="modal-body">
         		<div class="container-fluid" id="viewDiv">
         		<div style="margin-left: 10%;margin-top: 10px;">
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水供水温度:</label>
-        			<label id="fwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水供水压力:</label>
-        			<label id="fwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷凝温度:</label>
-        			<label id="condTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">{{iconList[0].name}}</label>
+        			<label id={{iconList[0].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[0].company}}</label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">{{iconList[1].name}}</label>
+        			<label id={{iconList[1].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[1].company}}</label>
+        			<label style="font: 12pt Microsoft YaHei;width: 10%;">{{iconList[2].name}}</label>
+        			<label id={{iconList[2].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[2].company}}</label>
         		</div>
         		<div style="margin-left: 10%;margin-top: 10px;">
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水回水温度:</label>
-        			<label id="rewaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷冻水回水压力:</label>
-        			<label id="rewaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">蒸发温度:</label>
-        			<label id="evatTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">{{iconList[3].name}}</label>
+        			<label id={{iconList[3].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[3].company}}</label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">{{iconList[4].name}}</label>
+        			<label id={{iconList[4].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[4].company}}</label>
+        			<label style="font: 12pt Microsoft YaHei;width: 10%;">{{iconList[5].name}}</label>
+        			<label id={{iconList[5].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[5].company}}</label>
         		</div>
         		<div style="margin-left: 10%;margin-top: 10px;">
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水供水温度:</label>
-        			<label id="coolwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水供水压力:</label>
-        			<label id="coolwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷凝压力:</label>
-        			<label id="condPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">{{iconList[6].name}}</label>
+        			<label id={{iconList[6].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[6].company}}</label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">{{iconList[7].name}}</label>
+        			<label id={{iconList[7].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[7].company}}</label>
+        			<label style="font: 12pt Microsoft YaHei;width: 10%;">{{iconList[8].name}}</label>
+        			<label id={{iconList[8].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[8].company}}</label>
         		</div>
         		<div style="margin-left: 10%;margin-top: 10px;">
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水回水温度:</label>
-        			<label id="rcoolwaterTemp" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">冷却水回水压力:</label>
-        			<label id="rcoolwaterPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
-        			<label style="font: 12pt Microsoft YaHei;width: 16%;">蒸发压力:</label>
-        			<label id="evapPress" style="font: 11pt Microsoft YaHei;width: 16%;"></label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">{{iconList[9].name}}</label>
+        			<label id={{iconList[9].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[9].company}}</label>
+        			<label style="font: 12pt Microsoft YaHei;width: 16%;">{{iconList[10].name}}</label>
+        			<label id={{iconList[10].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[10].company}}</label>
+        			<label style="font: 12pt Microsoft YaHei;width: 10%;">{{iconList[11].name}}</label>
+        			<label id={{iconList[11].code}} style="font: 11pt Microsoft YaHei;width: 3%;"></label>
+        			<label style="font: 11pt Microsoft YaHei;width: 13%;">{{iconList[11].company}}</label>
         		</div>
         		</div>
       	</div>
@@ -169,6 +183,6 @@
     </div><!-- /.modal-content -->
   	</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
-
 </body>
 </html>
+<script type="text/javascript" src="<%=pagePath %>/js/airCondition/airCondition.js"></script>

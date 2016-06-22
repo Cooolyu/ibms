@@ -54,7 +54,7 @@
 	
 		$("#file").change(function(){
 			var file = document.getElementById('file');
-			var type = ".jpeg.png.gif";
+			var type = ".jpeg.png.gif.jpg";
         	if(type.indexOf(file.value.substr(file.value.lastIndexOf(".")).toLowerCase())==-1){
         		alert("请上传图片文件");
         		file.value = null;
@@ -69,9 +69,9 @@
 	          		if(image.width > 1024){
 	          			alert("图片宽不能超过1024，请重新上床图片");
 	          			file.value = null;
-/* 	          			alert(image.width);
+	          			alert(image.width);
 	          			var data = compress(image);
-	          			window.open(data,"toDataURL() image", "width=600, height=200"); */
+	          			window.open(data,"toDataURL() image", "width=600, height=200"); 
 	          		}
 	      		};
 	      		image.src = data;

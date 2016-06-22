@@ -20,15 +20,14 @@
 <div class="lay-wrap">
 
 
-	<div class="lay-left col-xs-1">
-			<jsp:include page="../frame/leftbar.jsp">
-			<jsp:param value="alarmlist" name="module"/>
-			<jsp:param value="1" name="buildId" />
-		</jsp:include>
-	</div>
+		<div class="lay-left col-xs-1 ">
+			<jsp:include page="../build/buildSubMenu.jsp">
+				<jsp:param value="building" name="main" />
+			</jsp:include>
+		</div>
 	
 	
-	<div class="lay-main">
+	<div class="lay-main lay-has-sub-menu">
  		<div class="panel panel-default">
  		
  		
@@ -92,7 +91,6 @@
 		</div>
 	</div>
 	
-	<jsp:include page="<%=widgetFooter %>"></jsp:include>
 </div>
 	<div class="modal fade" id="showModal" role="dialog" aria-labelledby="gridSystemModalLabel">
   <div class="modal-dialog" role="document">

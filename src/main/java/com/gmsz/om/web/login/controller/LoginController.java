@@ -50,6 +50,7 @@ public class LoginController {
 		LoginResult loginResult = this.loginService.login(user);
 		if (loginResult.isResultValue() == true) {
 			Cookie cookie = new Cookie("omuser", AES.getInstance().encrypt(Long.toString(user.getId())));
+			
 			cookie.setMaxAge(-1);
 			cookie.setPath(request.getContextPath());
 			response.addCookie(cookie);

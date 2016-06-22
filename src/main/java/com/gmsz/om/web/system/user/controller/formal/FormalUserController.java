@@ -109,5 +109,6 @@ public class FormalUserController extends UserController {
 	public String getUserInfo(HttpServletRequest request) throws NotLoginException {
 		return super.getUserInfo(request);
 	}
+	
 }
 

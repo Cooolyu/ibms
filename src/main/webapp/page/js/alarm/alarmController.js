@@ -104,41 +104,41 @@ alarmModule.controller('alarmController', function($scope, $http, pagination, an
     };
     
     
-    var bindSocket = function() {
-    	var url = 'ws://172.25.35.245.8080/websocket/alarm';
-    	var ws = null;
-    	if ('WebSocket' in window)
-    		ws = new WebSocket(url);
-    	else if ('MozWebSocket' in window)
-    		ws = new MozWebSocket(url);
-    	else
-    		//alert('当前浏览器不支持websocket，请使用IE10+、Chrome17+、Firefox7+');
-    	// 用户未登录或者不支持websocket
-    	if (!ws) {
-    		return;
-    	}
+//    var bindSocket = function() {
+//    	var url = 'ws://172.25.35.245.8080/websocket/alarm';
+//    	var ws = null;
+//    	if ('WebSocket' in window)
+//    		ws = new WebSocket(url);
+//    	else if ('MozWebSocket' in window)
+//    		ws = new MozWebSocket(url);
+//    	else
+//    		//alert('当前浏览器不支持websocket，请使用IE10+、Chrome17+、Firefox7+');
+//    	// 用户未登录或者不支持websocket
+//    	if (!ws) {
+//    		return;
+//    	}
 
     	// 收到消息
-    	ws.onmessage = function(evt) {
-    		if (evt.data) {
-    			var result = JSON.parse(evt.data);
-    			if(result.status == 'bufang') {
-	    			if(result.value == "failure") {
-	    				pageutil.showTip("布防失败");
-	    			}else{
-	    				$('#tip').fadeOut(250);
-	    				$('html').css('overflow', 'auto');
-	    				showmap();
-	    			}
-    		   }
-    			if(result.status == 'warn') {
-    				showmap();
-    			}
-    			
-    		}
-    	};
-    };
-    
-    bindSocket();
+//    	ws.onmessage = function(evt) {
+//    		if (evt.data) {
+//    			var result = JSON.parse(evt.data);
+//    			if(result.status == 'bufang') {
+//	    			if(result.value == "failure") {
+//	    				pageutil.showTip("布防失败");
+//	    			}else{
+//	    				$('#tip').fadeOut(250);
+//	    				$('html').css('overflow', 'auto');
+//	    				showmap();
+//	    			}
+//    		   }
+//    			if(result.status == 'warn') {
+//    				showmap();
+//    			}
+//    			
+//    		}
+//    	};
+//    };
+//    
+//    bindSocket();
    
 });

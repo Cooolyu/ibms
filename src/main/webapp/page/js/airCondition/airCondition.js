@@ -1,6 +1,12 @@
 var airColdModule = angular.module('airColdModule', ['anajaxService']);
 airColdModule.controller('airColdController', function($scope, $http, anajax) {	
 	
+
+	
+	
+
+	
+	
 	//获取楼栋
 	var buildList = function(params) {
 		var url = commonutil.actionPath + "/airCdt/buildList";
@@ -18,6 +24,15 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 		var url = commonutil.actionPath + "/airCdt/floorList";
 		anajax.doajax(url,{'buildId':build.id,'sysModuleId':$("#sysModuleId").val()}, function(data) {
 			$scope.floors = data;
+			if($scope.floors.length == 0){
+				//判断楼栋是否有系统，没有清空数据
+				$scope.floor={};
+				$scope.assets={};
+				$scope.uassets= {};
+				$scope.iassets= {};
+			return;
+			}
+			
 			chooseFloor($scope.floors[0]);
 			
 		});
@@ -30,9 +45,34 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	}
 	//楼层选择项
 	var chooseFloor = function(floor) {
+		if(floor.name=="冷站系统"){
+			$scope.airColdsName = airColdsName;
+			$scope.airColds = airColds
+		}
+		else if(floor.name=="热源系统"){
+			$scope.airColdsName = airhotName;
+			$scope.airColds = airhot
+		}
+		else if(floor.name=="暖通空调"){
+			$scope.airColdsName = airName;
+			$scope.airColds = air
+		}
+		else if(floor.name=="排水系统"){
+			$scope.airColdsName = sswtName;
+			$scope.airColds = sswt
+		}
+		else if(floor.name=="给水系统"){
+			$scope.airColdsName = sswName;
+			$scope.airColds = ssw
+		}
+		else if(floor.name=="WY1_1_1AA"){
+			$scope.airColdsName = sswName;
+			$scope.airColds = ssw
+		}
 		$scope.floorTemp = floor;
 		$scope.floor = floor;
 		assetList(floor)
+		$scope.floorName = floor.name;
 		//初始显示选项
 		$("#panel1").hide();
 		$("#panel2").show();
@@ -67,11 +107,41 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	}
 	
 /**-----------------------------------控件拖拽-----------------------------------------**/	
-	$scope.airColds = [{name:'送风温度',value:'20℃',name2:'送风湿度', value2:'60%'},
+	var airColdsName= "冷站系统参数"
+	var airColds = [{name:'送风温度',value:'20℃',name2:'送风湿度', value2:'60%'},
 	                   {name:'回风温度',value:'20℃',name2:'回风湿度', value2:'60%'},
 	                   {name:'回水温度',value:'20℃',name2:'回风CO2', value2:'60PPM'}
 	                   ]
-	 var edit = function() {
+	var airhotName= "热源系统参数"
+	var airhot = [{name:'热水温度',value:'39℃',name2:'热水回水压力', value2:'4.7Bar'},
+	                   {name:'热水供水流量',value:'604.9m^3/h',name2:'热水供水温度', value2:'40℃'},
+	                   {name:'热水供水压力',value:'5.4Bar'}
+	                   ]
+	var airName= "AKB0048空调机组"
+	var air = [{name:'送风温度',value:'29℃',name2:'送风湿度', value2:'60%'},
+	                   {name:'水阀开度',value:'90%',name2:'回风温度', value2:'34℃'},
+	                   {name:'回风湿度',value:'50%',name:'回水温度',value:'32℃'}
+	                   ]
+	var sswtName= "39#S306集水坑"
+	var sswt = [{name:'1#泵状态：',value:'运行',name2:'1#泵故障', value2:'正常'},
+	                   {name:'主备切换',value:'备用',name2:'高液位报警', value2:'超高液位'},
+	                   {name:'2#泵运行状态',value:'运行',name:'2#泵故障',value:'正常'}
+	                   ]
+	var sswName= "1#冷却水补水系统"
+	var ssw = [{name:'1#泵状态',value:'运行',name2:'1#泵故障', value2:'正常'},
+	                   {name:'主备切换',value:'备用',name2:'供水量', value2:'100m^3'},
+	                   {name:'2#泵运行状态',value:'运行',name:'2#泵故障',value:'正常'}
+	                   ]
+	var sswName= "WY1_1_1AA"
+	var ssw = [{name:'A相电流',value:'100.0A',name2:'B相电流', value2:'120.0A'},
+	                   {name:'C相电流',value:'1150.0A',name2:'有功功率', value2:'67.0Kw'},
+	                   {name:'无功功率',value:'85.0KVar',name:'A相电压',value:'350.0V'},
+	                   {name:'B相电压',value:'320.0V',name:'C相电压',value:'400.0V'}
+	                   ]
+	 
+	
+	
+	var edit = function() {
 		$scope.bol = false;
 		//编辑显示项
 		$("#panel1").show();
@@ -211,6 +281,14 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	/**-------------------------------------显示弹出框-------------------------------------**/
 	
 	var showView = function(iasset) {
+		$scope.iconList={}
+		var iconList = function(params) {
+			var url = commonutil.actionPath + "/airCdt/iconList";
+			anajax.doajax(url,{"assetId":params}, function(data) {
+				$scope.iconList = data;
+			});
+		}
+		iconList(iasset.assetId)
 		$scope.asvName = iasset.name;
 		$scope.assetId = iasset.assetId;
 		var url = commonutil.actionPath + "/asset/dictionaryIdAndName";
@@ -226,7 +304,7 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
 	
 	/**-----------------------------------绑定webSocket----------------------------------**/
 	var bindSocket = function() {
-		var url = 'ws://172.16.120.131:8080/omf/websocket/airCold';
+		var url = 'ws://172.16.120.139:8080/omf/websocket/airCold';
 		var ws = null;
     		if ('WebSocket' in window)
     			ws = new WebSocket(url);
@@ -246,7 +324,7 @@ airColdModule.controller('airColdController', function($scope, $http, anajax) {
     				if(data[1] == $scope.assetId){
     					for(var i=0; i<$scope.assetProps.length;i++){
     						if($scope.assetProps[i].dictionaryId == data[0])
-    							$("#"+$scope.assetProps[i].code).html(data[2])
+    							$("#"+$scope.assetProps[i].code).html(":"+data[2])
 //    							alert(data[2])
     					}
     				}

@@ -25,4 +25,10 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="assetPropList" parameterType="long" resultType="com.gmsz.om.common.beans.AssetProp">
 		select * from assetsproperties where assetsId=#{assetId} and dictionaryId=11 
 	</select>
+	
+	<select id="iconList" resultType="com.gmsz.om.web.airCondition.beans.Icon" parameterType="long">
+		SELECT d.name, d.code,d.company from dictionary d,opcmap o WHERE d.id=o.dictionaryId and o.assetsId=#{assetId}
+	</select>
+	
+	
 </mapper>

@@ -23,7 +23,7 @@
 		<div class="lay-left col-xs-1 ">
 
 				<jsp:include page="../airCondition/airSubMenu.jsp">
-					<jsp:param value="airCdtShow" name="main"/>
+					<jsp:param value="tadShow" name="main"/>
 				</jsp:include>
 				
 		</div>

@@ -67,7 +67,7 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		pageutil.showRightBarAn('资产录入');
 		$scope.assetBrand = $scope.assetBrands[0];
 		$scope.assetCate = $scope.assetCates[0];
-		$scope.assetStatuss = [{id:1,name:"报废"},{id:2,name:"使用中"},{id:3,name:"备用"},{id:4,name:"维护中"}]
+		$scope.assetStatuss = [{id:1,name:"关机"},{id:2,name:"使用中"},{id:4,name:"维护中"}]
 		$scope.assetStatus = $scope.assetStatuss[0];
 		$scope.assetModel = $scope.assetModels[0];
 	
@@ -165,7 +165,7 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	 */
 	$scope.goCustomize = function (index , params) {
 		
-		alert(document.cookie)
+//		alert(document.cookie)
 		
 		$scope.assetId = $scope.assets[index].id;
 
@@ -275,7 +275,7 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 				return;
 			}
 		}
-		alert($scope.assetProps[0].dictionaryId)
+//		alert($scope.assetProps[0].dictionaryId)
 //		if($scope.assetProps.length > 0){
 //			return;
 		var purl = commonutil.actionPath + '/asset/uiAssetProp';
@@ -293,7 +293,7 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		var subForm = {};
 		subForm.assetProps = assetProps;
 
-		alert(JSON.stringify(subForm)+"---");
+//		alert(JSON.stringify(subForm)+"---");
 		 $.ajax({  
 		        type : 'POST',  
 		        contentType : 'application/json',  
@@ -322,7 +322,7 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 		$scope.rightPart = 'modify';
 		pageutil.showRightBarAn('资产修改');
 		$scope.assetId = $scope.assets[index].id;
-		$scope.mStatuss = [{'id':1,'name':"报废"},{'id':2,'name':"使用中"},{'id':3,'name':"备用中"},{'id':4,'name':"维护中"}]
+		$scope.mStatuss = [{'id':1,'name':"关机"},{'id':2,'name':"使用中"},{'id':4,'name':"维护中"}]
 		for(var i=0;i<$scope.mStatuss.length;i++){
 			if($scope.mStatuss[i].id == $scope.assets[index].status)
 				$scope.mStatus = $scope.mStatuss[i];
@@ -337,6 +337,8 @@ assetListModule.controller('assetListController', function($scope, $http, pagina
 	//执行修改
 	$scope.doChange = function() {
 		var url = commonutil.actionPath + '/asset/changeAsset';
+		if($scope.mmemo == null)
+			$scope.mmemo=""
 		anajax.doajax(url, {"assetId":$scope.assetId,"status":$scope.mStatus.id,"endDate":$scope.mendDate,"memo":$scope.mmemo}, function(data) {
 			if (data.resultValue == true) {
 				pageutil.showTip('修改成功');
@@ -391,7 +393,7 @@ assetListModule.filter('status',function(){
 	return function (input) {
 		switch (input) {
 		case 1:
-			return '报废';
+			return '关机';
 			break;
 		case 2:
 			return '使用中';
